@@ -16,6 +16,9 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 	)
 	on buttonLogout pressed  do
 	(
-	
+		gc()
+		local filename = (GetDir #plugcfg_ln + "\\cesium_token")
+		deleteFile filename
+		DestroyDialog cesiumFloater
 	)
 )
