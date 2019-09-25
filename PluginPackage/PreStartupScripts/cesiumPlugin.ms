@@ -1,11 +1,10 @@
 struct cesiumPlugin
 (
 	SERVER,
-	CLIENT_ID = "53",
+	CLIENT_ID = "56",
     ION_ADDRESS = "https://cesium.com",
     API_ADDRESS = "https://api.cesium.com",
-	REDIRECT_ADDRESS = "localhost",
-	REDIRECT_PORT = 10101,
+	REDIRECT_ADDRESS = @"http://localhost:5000/",
 	cesiumMenuName = "Export to Cesium ion",
 	fn loadClass Path =
 	(
@@ -19,7 +18,7 @@ struct cesiumPlugin
 
 		local csharpProvider = dotnetobject "Microsoft.CSharp.CSharpCodeProvider"
 		local compilerParams = dotnetobject "System.CodeDom.Compiler.CompilerParameters"
-		compilerParams.ReferencedAssemblies.AddRange #("System.Net.Http.dll","System.dll", "System.Management.dll")
+		compilerParams.ReferencedAssemblies.AddRange #("System.Collections.dll", "System.Net.Http.dll", "System.Threading.Tasks.dll", "System.Runtime.dll", "System.Diagnostics.Process.dll", "System.dll", "System.Runtime.Extensions.dll", "System.Runtime.dll", "System.Runtime.InteropServices.RuntimeInformation.dll", "Microsoft.AspNetCore.Hosting.Abstractions.dll", "Microsoft.AspNetCore.Http.Abstractions.dll", "Microsoft.Extensions.Hosting.Abstractions.dll", "Microsoft.AspNetCore.Hosting.Server.Abstractions.dll","mscorlib.dll", "netstandard.dll", "System.Management.dll")
 		compilerParams.GenerateInMemory = on
 		local compilerResults = csharpProvider.CompileAssemblyFromFile compilerParams #(Path)
 	),
@@ -32,7 +31,7 @@ struct cesiumPlugin
 		PointManager.Expect100Continue = true
 		setProperty PointManager "SecurityProtocol" type
 --		PointManager.SecurityProtocol.setProperty() 
-		redirectUri = "http%3A%2F%2Flocalhost%3A10101%2F"
+		redirectUri = @"http://localhost:5000/"
 --		redirectUri = dotNetObject "System.Uri" (redirectUri as string)
 --		params = format "response_type=code&client_id=%&redirect_uri=%&scope=asset\%3Awrite&code_challenge=%&code_challenge_method=S256" CLIENT_ID redirectUri codechallenge
 		params = stringstream ""
