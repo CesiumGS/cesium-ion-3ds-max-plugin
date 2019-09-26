@@ -11,10 +11,11 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
+namespace Ctest
+{
 
-public class Server
-{   
-
+    public class StartUp
+    {
     public void Configure(IApplicationBuilder app, Microsoft.Extensions.Hosting.IHostApplicationLifetime lifeTime)
         {
             var serverAddressesFeature = 
@@ -40,16 +41,21 @@ public class Server
                 await context.Response.WriteAsync("<p>Request URL: " +
                     $"{context.Request.GetDisplayUrl()}<p>");
                 string url = context.Request.GetDisplayUrl();
-                RequestToken(url);
+                Server.RequestToken(url);
                 lifeTime.StopApplication();
             });
         }
+    }
+static public class Server
+{   
+
+    
     private static readonly HttpClient client = new HttpClient();
     private static string clientID;
     private static string redirectUri;
     private static string localUrl;
 
-    private static async Task RequestToken(string url)
+    public static async Task RequestToken(string url)
     {
         UriBuilder response = new UriBuilder(url);
         string code = response.Query;
@@ -102,7 +108,7 @@ public class Server
                     // Configure endpoint defaults
                     });
                 })
-                .UseStartup<Server>();
+                .UseStartup<StartUp>();
             });
 
     public static async Task GetToken(string remoteUrl, string responseType, string clientID, string redirectUri, string scope, string localUrl)
@@ -161,4 +167,5 @@ public class Server
         await Task.WhenAll(allTasks).ConfigureAwait(false);
     }
     */
+}
 }
