@@ -11,50 +11,46 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
-namespace Ctest
+public class StartUp
 {
-
-    public class StartUp
-    {
     public void Configure(IApplicationBuilder app, Microsoft.Extensions.Hosting.IHostApplicationLifetime lifeTime)
+    {
+        var serverAddressesFeature = 
+            app.ServerFeatures.Get<IServerAddressesFeature>();
+
+        app.UseStaticFiles();
+
+        app.Run(async (context) =>
         {
-            var serverAddressesFeature = 
-                app.ServerFeatures.Get<IServerAddressesFeature>();
-
-            app.UseStaticFiles();
-
-            app.Run(async (context) =>
+            context.Response.ContentType = "text/html";
+            string url = context.Request.GetDisplayUrl();
+            Uri response = new Uri(url);
+            string query = response.Query;
+            if(query.StartsWith("?code="))
             {
-                context.Response.ContentType = "text/html";
-                string url = context.Request.GetDisplayUrl();
-                Uri response = new Uri(url);
-                string query = response.Query;
-                if(query.StartsWith("?code="))
-                {
-                    _ = Server.RequestToken(query);
-                    await context.Response.WriteAsync("<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>");
-                }
-                else
-                {
-                    await context.Response.WriteAsync("<h2>Authorization Denied!</h2>");
-                }
-                
-                lifeTime.StopApplication();
-            });
-        }
+                _ = Server.RequestToken(query);
+                await context.Response.WriteAsync("<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>");
+            }
+            else
+            {
+                await context.Response.WriteAsync("<h2>Authorization Denied!</h2>");
+            }
+            
+            lifeTime.StopApplication();
+        });
     }
+}
 static public class Server
 {   
-
     static void Main(string[] args)
+    {
+        if (args.Length >= 4 && args[0] == "gettoken")
         {
-            if (args.Length >= 4 && args[0] == "gettoken")
-            {
-                Console.WriteLine("Start");
-                Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]).Wait();
-                Console.WriteLine("End");
-            }
+            Console.WriteLine("Start");
+            Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]).Wait();
+            Console.WriteLine("End");
         }
+    }
 
     
     private static readonly HttpClient client = new HttpClient();
@@ -146,7 +142,9 @@ static public class Server
         }
     }
 
- /*   public static async Task DownloadFileAsync(string remoteUrl, string localUrl)
+
+ /* Might be useful as reference for uploading
+    public static async Task DownloadFileAsync(string remoteUrl, string localUrl)
     {
         using (HttpResponseMessage responseMessage = await client.GetAsync(remoteUrl).ConfigureAwait(false))
         {
@@ -172,4 +170,4 @@ static public class Server
     }
     */
 }
-}
+
