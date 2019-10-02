@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System;
+using System.Threading;
 using System.Runtime.InteropServices;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
@@ -28,7 +29,7 @@ public class StartUp
             string query = response.Query;
             if(query.StartsWith("?code="))
             {
-                _ = Server.RequestToken(query);
+                await Server.RequestToken(query);
                 await context.Response.WriteAsync("<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>");
             }
             else
@@ -47,7 +48,8 @@ static public class Server
         if (args.Length >= 4 && args[0] == "gettoken")
         {
             Console.WriteLine("Start");
-            Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]).Wait();
+            _ = Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]);
+            Thread.Sleep(1000*60*2);
             Console.WriteLine("End");
         }
     }
@@ -95,20 +97,20 @@ static public class Server
 
     private static void StartServer()
     {
-        CreateHostBuilder().Build().Run();
+        try
+        {
+            CreateHostBuilder().Build().Run();
+        }
+        catch (Exception)
+        {
+
+        }
     }
     private static IHostBuilder CreateHostBuilder(params string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.ConfigureKestrel(serverOptions =>
-                {
-                    serverOptions.ConfigureEndpointDefaults(listenOptions =>
-                    {
-                    // Configure endpoint defaults
-                    });
-                })
-                .UseStartup<StartUp>();
+                webBuilder.UseStartup<StartUp>();
             });
 
     public static async Task GetToken(string remoteUrl, string responseType, string clientID, string redirectUri, string scope, string localUrl)

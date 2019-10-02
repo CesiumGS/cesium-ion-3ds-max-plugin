@@ -2,7 +2,7 @@
 
 macroScript exportButton category: "mxs docs" tooltip:cesiumInstance.cesiumMenuName
 (
-	local filename = (GetDir #plugcfg_ln + "\\cesium_token")
+	local filename = (GetDir #plugcfg_ln + "\\cesiumIonToken")
 	local tokenFile = openFile filename
 	if tokenFile == undefined then
 	(
