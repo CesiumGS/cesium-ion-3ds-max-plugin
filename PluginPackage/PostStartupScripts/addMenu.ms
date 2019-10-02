@@ -6,7 +6,7 @@ macroScript exportButton category: "mxs docs" tooltip:cesiumInstance.cesiumMenuN
 	local tokenFile = openFile filename
 	if tokenFile == undefined then
 	(
-		cesiumInstance.SERVER.GetToken @"https://cesium.com/ion/oauth" "code" cesiumInstance.CLIENT_ID cesiumInstance.REDIRECT_ADDRESS "assets:write" filename
+		HiddenDOSCommand cesiumInstance.SERVERGETTOKEN donotwait:true
 	)
 	else
 	(

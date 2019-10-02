@@ -26,22 +26,19 @@ namespace Ctest
             app.Run(async (context) =>
             {
                 context.Response.ContentType = "text/html";
-                await context.Response
-                    .WriteAsync("<!DOCTYPE html><html lang=\"en\"><head>" +
-                        "<title></title></head><body><p>Hosted by Kestrel</p>");
-
-                if (serverAddressesFeature != null)
-                {
-                    await context.Response
-                        .WriteAsync("<p>Listening on the following addresses: " +
-                            string.Join(", ", serverAddressesFeature.Addresses) +
-                            "</p>");
-                }
-
-                await context.Response.WriteAsync("<p>Request URL: " +
-                    $"{context.Request.GetDisplayUrl()}<p>");
                 string url = context.Request.GetDisplayUrl();
-                Server.RequestToken(url);
+                Uri response = new Uri(url);
+                string query = response.Query;
+                if(query.StartsWith("?code="))
+                {
+                    _ = Server.RequestToken(query);
+                    await context.Response.WriteAsync("<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>");
+                }
+                else
+                {
+                    await context.Response.WriteAsync("<h2>Authorization Denied!</h2>");
+                }
+                
                 lifeTime.StopApplication();
             });
         }
@@ -49,27 +46,34 @@ namespace Ctest
 static public class Server
 {   
 
+    static void Main(string[] args)
+        {
+            if (args.Length >= 4 && args[0] == "gettoken")
+            {
+                Console.WriteLine("Start");
+                Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]).Wait();
+                Console.WriteLine("End");
+            }
+        }
+
     
     private static readonly HttpClient client = new HttpClient();
     private static string clientID;
     private static string redirectUri;
     private static string localUrl;
 
-    public static async Task RequestToken(string url)
+    public static async Task RequestToken(string query)
     {
-        UriBuilder response = new UriBuilder(url);
-        string code = response.Query;
-        if(!code.StartsWith("?code="))
-            return;
-        int index = code.IndexOf("&");
+        int index = query.IndexOf("&");
+        string code;
         if (index == -1)
         {
-            code = code.Substring(6);
+            code = query.Substring(6);
         }
         else
         {
-            string state = code.Substring(index);
-            code = code.Substring(6,index-6);
+            string state = query.Substring(index);
+            code = query.Substring(6,index-6);
             //TODO: check state
         } 
 
@@ -93,11 +97,11 @@ static public class Server
         }
     }
 
-    public static void StartServer()
+    private static void StartServer()
     {
         CreateHostBuilder().Build().Run();
     }
-    public static IHostBuilder CreateHostBuilder(params string[] args) =>
+    private static IHostBuilder CreateHostBuilder(params string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
@@ -125,7 +129,7 @@ static public class Server
         await thread;
     }
 
-    public static void OpenBrowser(string url)
+    private static void OpenBrowser(string url)
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
