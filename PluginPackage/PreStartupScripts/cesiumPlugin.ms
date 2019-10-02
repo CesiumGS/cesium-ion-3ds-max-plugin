@@ -42,7 +42,11 @@ struct cesiumPlugin
 			local serverPath = path + @"C#\C#.exe"
 			local filename = (GetDir #plugcfg_ln + "\\cesium_token")
 			SERVERGETTOKEN = serverpath + " gettoken " + CLIENT_ID + " " + REDIRECT_ADDRESS + " " + filename
-			HiddenDOSCommand  SERVERGETTOKEN donotwait:true
+			local tokenFile = openFile filename
+			if tokenFile == undefined then
+			(
+				HiddenDOSCommand  SERVERGETTOKEN donotwait:true
+			)
 	)
 )
 cesiumInstance = cesiumPlugin()
