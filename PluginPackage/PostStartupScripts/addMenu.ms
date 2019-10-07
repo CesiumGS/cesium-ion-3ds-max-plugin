@@ -6,7 +6,6 @@ macroScript exportButton category: "mxs docs" tooltip:cesiumInstance.cesiumMenuN
 	path = getFilenamePath path
 	path = substring path 1 (path.count-1)
 	path = getFilenamePath path
-	print path
 	local serverPath = path + @"C#\C#.exe"
 	local filename = (GetDir #plugcfg_ln + "\\cesiumIonToken")
 	cesiumInstance.SERVERGETTOKEN = serverpath + " gettoken " + cesiumInstance.CLIENT_ID + " " + cesiumInstance.REDIRECT_ADDRESS + " \"" + filename + "\""
