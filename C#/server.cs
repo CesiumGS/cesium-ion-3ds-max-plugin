@@ -5,12 +5,17 @@ using System.Diagnostics;
 using System;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using Amazon.S3.Transfer;
+using Amazon.S3;
+using Amazon.Runtime;
 
 public class StartUp
 {
@@ -48,9 +53,14 @@ static public class Server
         if (args.Length >= 4 && args[0] == "gettoken")
         {
             Console.WriteLine("Start");
+            
             _ = Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]);
             Thread.Sleep(1000*60*2);
             Console.WriteLine("End");
+        }
+        if (args.Length >= 7 && args[0] == "upload")
+        {
+            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6]).Wait();
         }
     }
 
@@ -144,32 +154,57 @@ static public class Server
         }
     }
 
-
- /* Might be useful as reference for uploading
-    public static async Task DownloadFileAsync(string remoteUrl, string localUrl)
+    public static async Task Upload(string filePath, string name, string description, string sourceType, string textureFormat, string tokenPath)
     {
-        using (HttpResponseMessage responseMessage = await client.GetAsync(remoteUrl).ConfigureAwait(false))
+        string content = String.Format(
+        @"{{""name"": ""{0}"", ""description"": ""{1}"", ""type"": ""3DTILES"", ""options"": {{""sourceType"": ""{2}"", ""textureFormat"": ""{3}""}} }}",
+        name,description,sourceType,textureFormat);
+        var POSTContent = new StringContent(content, Encoding.UTF8, "application/json");
+        string token = System.IO.File.ReadAllText(tokenPath);
+        JsonObject json = JsonValue.Parse(token) as JsonObject;
+        client.DefaultRequestHeaders.Add("Authorization","Bearer " + (string)json["access_token"]);
+        client.DefaultRequestHeaders.Add("json", "true");
+
+        Uri requestUri = new Uri("https://api.cesium.com/v1/assets");
+
+        using (HttpResponseMessage responseMessage = await client.PostAsync(requestUri,POSTContent))
         {
             if (responseMessage.IsSuccessStatusCode)
             {
-                var byteArray = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                using (FileStream filestream = new FileStream(localUrl, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize:4096, useAsync:true))
+                string responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                JsonObject responseJson = JsonValue.Parse(responseContent) as JsonObject;
+                JsonObject uploadLocation = responseJson["uploadLocation"] as JsonObject;
+                JsonObject onComplete = responseJson["onComplete"] as JsonObject;
+                try 
                 {
-                    await filestream.WriteAsync(byteArray, 0, byteArray.Length);
+                    SessionAWSCredentials credentials = new SessionAWSCredentials(
+                        (string)uploadLocation["accessKey"],
+                        (string)uploadLocation["secretAccessKey"],
+                        (string)uploadLocation["sessionToken"]);
+                    using (AmazonS3Client s3Client = new AmazonS3Client(credentials,Amazon.RegionEndpoint.USEast1))
+                    {
+                        var fileTransferUtility = new TransferUtility(s3Client);
+                        await fileTransferUtility.UploadAsync(filePath, (string)uploadLocation["bucket"], (string)uploadLocation["prefix"] + name + ".fbx");
+                        var completeContent = new StringContent(onComplete["fields"].ToString(), Encoding.UTF8, "application/json");
+                        await client.PostAsync((string)onComplete["url"],completeContent);
+                    }
                 }
+            catch (AmazonS3Exception e)
+            {
+                Console.WriteLine("Error encountered on server. Message:'{0}' when writing an object", e.Message);
             }
-        }        
+            catch (Exception e)
+            {
+                Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
+            }
+
+            }
+            else
+            {
+                string error = await responseMessage.Content.ReadAsStringAsync();
+            }
+        }
     }
 
-    public static async Task DownloadMultipleFilesAsync(string[] remoteUrl, string[] localUrl)
-    {
-        List allTasks = new List();
-        for (int n = 0; n < remoteUrl.Length; n++)
-        {
-            allTasks.Add(DownloadFileAsync(remoteUrl[n], localUrl[n]));
-        }
-        await Task.WhenAll(allTasks).ConfigureAwait(false);
-    }
-    */
 }
 
