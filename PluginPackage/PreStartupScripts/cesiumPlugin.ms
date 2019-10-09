@@ -1,6 +1,7 @@
 struct cesiumPlugin
 (
 	SERVERGETTOKEN,
+	SERVERDIRECTORY,
 	CLIENT_ID = "56",
     ION_ADDRESS = "https://cesium.com",
     API_ADDRESS = "https://api.cesium.com",
@@ -40,8 +41,10 @@ struct cesiumPlugin
 			path = substring path 1 (path.count-1)
 			path = getFilenamePath path
 			local serverPath = path + @"C#\C#.exe"
+			SERVERDIRECTORY = path + @"C#\"
 			local filename = (GetDir #plugcfg_ln + "\\cesiumIonToken")
-			SERVERGETTOKEN = serverpath + " gettoken " + CLIENT_ID + " " + REDIRECT_ADDRESS + " \"" + filename + "\""
+
+			SERVERGETTOKEN = "C#.exe" + " gettoken " + CLIENT_ID + " " + REDIRECT_ADDRESS + " \"" + filename + "\""
 			local tokenFile = openFile filename
 			if tokenFile == undefined then
 			(
