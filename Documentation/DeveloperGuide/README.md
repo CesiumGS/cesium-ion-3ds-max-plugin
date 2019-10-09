@@ -9,6 +9,7 @@ Follow these steps to run the addon directly from source so that your changes wi
 # Running on windows
 
 **Visual Studio Code**
+
 Open the project in VS Code.
 
 To deploy code directly from VS Code to 3ds Max follow this tutorial:
@@ -42,17 +43,24 @@ Use this build task to run the project:
 ```
 
 **Running the plugin**
-Open *Pluginpackage/PreStartupScripts/cesiumPlugin.ms*.
+
+Create the Windows Environment Variable ADSK_APPLICATION_PLUGINS and set it to your repository.
+The plugin should now be loaded on start-up.
+
+To manually run the plugin:
+Open *PluginPackage/PreStartupScripts/cesiumPlugin.ms*.
 Run it with *crtl + shift + b*.
-Open *Pluginpackage/PreStartupScripts/mainWidget.ms* and run it. This creates the Exporter popup window.
-Next open *Pluginpackage/PreStartupScripts/addMenus.ms* and run it. This will add the menu item in 3ds Max under *File->Export*.
+Open *PluginPackage/Widgets/mainWidget.ms* and run it. This creates the Exporter popup window.
+Next open *PluginPackage/PostStartupScripts/addMenus.ms* and run it. This will add the menu item in 3ds Max under *File->Export*.
 Running these files in a different order will create an error in 3ds Max.
 
 **Updating popups**
+
 To update the popup simply rerun the .ms file which creates it (for example *mainWidget.ms*).
 
 **Delete old menus**
-When you close and reopen 3ds Max it can happen that the previously created export menu item will get lost. In that case it will still appear in there but with the text *Missing: exportButton'mxs docs* and without any functionality. To delete it open *Customize->Customize User Interface*. Open the *Menus* tab and delete it in the panel on the right under *File->File_Export* by selecting it and pressing *entf* on your key board. Afterwards repeat the steps to run the plugin.
+
+When you close and reopen 3ds Max it can happen that the previously created export menu item will get lost. In that case it will still appear in there but with the text *Missing: exportButton'mxs docs* and without any functionality. To delete it open *Customize->Customize User Interface*. Open the *Menus* tab and delete it in the panel on the right under *File->File_Export* by selecting it and pressing *entf* on your keyboard or by pressing the *Reset* button. Afterwards repeat the steps to run the plugin.
 
 
 ## Debugging
