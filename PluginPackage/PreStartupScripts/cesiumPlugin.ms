@@ -1,6 +1,7 @@
 struct cesiumPlugin
 (
 	SERVERGETTOKEN,
+	SERVERDIRECTORY,
 	CLIENT_ID = "56",
     ION_ADDRESS = "https://cesium.com",
     API_ADDRESS = "https://api.cesium.com",
@@ -35,6 +36,13 @@ struct cesiumPlugin
 	),
 	fn init =
 	(
+			local path = getSourceFileName()
+			path = getFilenamePath path
+			path = substring path 1 (path.count-1)
+			path = getFilenamePath path
+			SERVERDIRECTORY = path + @"C#\"
+			local filename = (GetDir #plugcfg_ln + "\\cesiumIonToken")
+			SERVERGETTOKEN = "C#.exe" + " gettoken " + CLIENT_ID + " " + REDIRECT_ADDRESS + " \"" + filename + "\""
 	)
 )
 

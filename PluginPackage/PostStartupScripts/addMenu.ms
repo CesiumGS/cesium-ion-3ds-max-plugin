@@ -12,7 +12,7 @@ macroScript exportButton category: "mxs docs" tooltip:cesiumInstance.cesiumMenuN
 	local tokenFile = openFile filename
 	if tokenFile == undefined then
 	(
-		HiddenDOSCommand  cesiumInstance.SERVERGETTOKEN donotwait:false
+		HiddenDOSCommand cesiumInstance.SERVERGETTOKEN startpath:cesiumInstance.SERVERDIRECTORY donotwait:true
 	)
 	else
 	(
