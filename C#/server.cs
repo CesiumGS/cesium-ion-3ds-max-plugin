@@ -52,15 +52,15 @@ static public class Server
     {
         if (args.Length >= 4 && args[0] == "gettoken")
         {
-            Console.WriteLine("Start");
-            
-            _ = Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]);
-            Thread.Sleep(1000*60*2);
+            Console.WriteLine("Start gettoken");      
+            Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]).Wait(1000*60*5);
             Console.WriteLine("End");
         }
-        if (args.Length >= 7 && args[0] == "upload")
+        if (args.Length >= 8 && args[0] == "upload")
         {
-            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6]).Wait();
+            Console.WriteLine("Start Upload");
+            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7]).Wait();
+            Console.WriteLine("Upload finished");
         }
     }
 
@@ -154,11 +154,11 @@ static public class Server
         }
     }
 
-    public static async Task Upload(string filePath, string name, string description, string sourceType, string textureFormat, string tokenPath)
+    public static async Task Upload(string filePath, string name, string description, string attribution, string sourceType, string textureFormat, string tokenPath)
     {
         string content = String.Format(
-        @"{{""name"": ""{0}"", ""description"": ""{1}"", ""type"": ""3DTILES"", ""options"": {{""sourceType"": ""{2}"", ""textureFormat"": ""{3}""}} }}",
-        name,description,sourceType,textureFormat);
+        @"{{""name"": ""{0}"", ""description"": ""{1}"", ""attribution"": ""{2}"", ""type"": ""3DTILES"", ""options"": {{""sourceType"": ""{3}"", ""textureFormat"": ""{4}""}} }}",
+        name,description,attribution,sourceType,textureFormat);
         var POSTContent = new StringContent(content, Encoding.UTF8, "application/json");
         string token = System.IO.File.ReadAllText(tokenPath);
         JsonObject json = JsonValue.Parse(token) as JsonObject;
