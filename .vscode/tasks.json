@@ -18,6 +18,38 @@
              "panel": "dedicated"
           },
           "problemMatcher": [],
-       }
+       },
+       {
+         "label": "build",
+         "command": "dotnet",
+         "type": "process",
+         "args": [
+             "build"
+         ],
+         "options": {
+             "cwd": "${workspaceFolder}/C#"
+         },
+         "problemMatcher": "$tsc"
+     },
+     {
+         "label": "build Release",
+         "command": "dotnet",
+         "type": "process",
+         "args": [
+             "publish",
+             "-c",
+             "Release",
+             "-o",
+             "../PluginPackage/C#/"
+         ],
+         "options": {
+             "cwd": "${workspaceFolder}/C#"
+         },
+         "problemMatcher": "$msCompile",
+         "group": {
+             "kind": "build",
+             "isDefault": true
+         }
+     }
     ]
 }
