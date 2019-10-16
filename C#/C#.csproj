@@ -5,4 +5,9 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.3.104.34" />
+    <PackageReference Include="System.Json" Version="4.6.0" />
+  </ItemGroup>
+
 </Project>

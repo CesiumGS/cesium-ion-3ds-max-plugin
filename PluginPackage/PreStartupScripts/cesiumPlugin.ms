@@ -7,6 +7,7 @@ struct cesiumPlugin
     API_ADDRESS = "https://api.cesium.com",
 	REDIRECT_ADDRESS = @"http://localhost:5000/",
 	cesiumMenuName = "Export to Cesium ion",
+	tokenLocation,
 	fn createMenu =
 	(
 		local fileMenu = menuMan.findMenu "&File"
@@ -41,8 +42,8 @@ struct cesiumPlugin
 			path = substring path 1 (path.count-1)
 			path = getFilenamePath path
 			SERVERDIRECTORY = path + @"C#\"
-			local filename = (GetDir #plugcfg_ln + "\\cesiumIonToken")
-			SERVERGETTOKEN = "C#.exe" + " gettoken " + CLIENT_ID + " " + REDIRECT_ADDRESS + " \"" + filename + "\""
+			tokenLocation = (GetDir #plugcfg_ln + "\\cesiumIonToken")
+			SERVERGETTOKEN = "C#.exe" + " gettoken " + CLIENT_ID + " " + REDIRECT_ADDRESS + " \"" + tokenLocation + "\""
 	)
 )
 
