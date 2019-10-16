@@ -3,7 +3,7 @@
     SchemaVersion="1.0" 
     AutodeskProduct="3ds Max" 
     ProductType="Application" 
-    Name="Cesium Exporter"
+    Name="Cesium ion Exporter"
     AppVersion="1.0.0"
     ProductCode="{51cb480c-6675-46a4-80e3-ece81e24a028}" 
     UpgradeCode="{3859b708-555b-44a0-846b-1e211caab7c3}">
@@ -11,11 +11,11 @@
     <Components Description="post-start-up scripts parts">
         <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2018" SeriesMax="2020" />
         <ComponentEntry ModuleName="./PostStartupScripts/addMenu.ms" />
+        <ComponentEntry ModuleName="./Widgets/mainWidget.ms" />
+        <ComponentEntry ModuleName="./Widgets/nameRequiredWidget.ms" />
     </Components>
     <Components Description="pre-start-up scripts parts">
         <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2018" SeriesMax="2020" />
-        <ComponentEntry ModuleName="./Widgets/mainWidget.ms" />
-        <ComponentEntry ModuleName="./Widgets/nameRequiredWidget.ms" />
 		<ComponentEntry ModuleName="./PreStartupScripts/cesiumPlugin.ms" />
 	</Components>
 </ApplicationPackage>
