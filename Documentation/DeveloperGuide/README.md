@@ -5,8 +5,7 @@ Follow these steps to run the addon directly from source so that your changes wi
 1. **[REPLACEME]** COMPLETE INSTRUCTIONS
 1. Discuss how to get the repository running on any operating system (including Unix, Linux and Windows). The steps should outline from cloning the repository to having the application running in a development state.
 
-
-# Running on windows
+3ds Max runs only on Windows, therefore the following documention is for Windows only.
 
 The project consists of two parts:
 - a .NET Core project which handles all network interaction.
@@ -17,13 +16,13 @@ Template task.json and launch.json files are included in the repository.
 
 **Visual Studio Code**
 
-Clone the repository.\
-Open the repository as workspace in VS Code.
+1. Clone the repository.
+1. Open the repository as workspace in VS Code.
 
-To deploy code directly from VS Code to 3ds Max follow this tutorial:
+1. To deploy code directly from VS Code to 3ds Max follow this tutorial, but use the task.json from the repository instead:
 https://walterlow.com/setting-up-visual-studio-code-as-an-editor-for-3ds-maxscript/
 
-Change **"C:\\PATH_TO\\MXSPyCOM.exe"** in task.json to the correct file location:
+1. Change **"C:\\PATH_TO\\MXSPyCOM.exe"** in task.json to the correct file location:
 ```json
 {
     // See https://go.microsoft.com/fwlink/?LinkId=733558
@@ -56,10 +55,11 @@ Create the Windows Environment Variable ADSK_APPLICATION_PLUGINS and set it to y
 The plugin should now be loaded on start-up.
 
 To manually run the plugin:
-Open *PluginPackage/PreStartupScripts/cesiumPlugin.ms*.
-Run it with the Task **Execute Script in 3ds Max**.
-Open *PluginPackage/Widgets/mainWidget.ms* and run it. This creates the Exporter popup window.
-Next open *PluginPackage/PostStartupScripts/addMenus.ms* and run it. This will add the menu item in 3ds Max under *File->Export*.
+1. Open *PluginPackage/PreStartupScripts/cesiumPlugin.ms*.
+1. Run it with the Task **Execute Script in 3ds Max**.
+1. Open *PluginPackage/Widgets/nameRequiredWidget.ms* and run it. This creates a warning popup.
+1. Open *PluginPackage/Widgets/mainWidget.ms* and run it. This creates the Exporter popup window.
+1. Next open *PluginPackage/PostStartupScripts/addMenus.ms* and run it. This will add the menu item in 3ds Max under *File->Export*.
 Running these files in a different order will create an error in 3ds Max.
 
 **Updating popups**
@@ -97,10 +97,10 @@ Go to the Debug Panel (*crtl + shift + d*) and run in Debug Mode (*F5*).
 
 1. Pull down the latest master branch: `git pull origin master`
 1. Modify `PluginPackage/PackageContents.xml` and increment the minor version only:
-  - `"AppVersion="1.0.0"` becomes `AppVersion="1.1.0"`
+   - `"AppVersion="1.0.0"` becomes `AppVersion="1.1.0"`
 1. Proofread and update CHANGES.md to capture any changes since last release.
 1. Commit and push these changes directly to master.
-1. Make sure the repository is clean `git clean -d -x -f`. __This will delete all files not already in the repository.__
+1. Make sure the repository is clean `git clean -xdf`. __This will delete all files not already in the repository.__
 1. Pack PluginPackage into `io-cesium-ion-vx.x.x.zip` (were x.x.x will be the version)
 
 **Testing**
@@ -110,21 +110,20 @@ Go to the Debug Panel (*crtl + shift + d*) and run in Debug Mode (*F5*).
 
 **Release**
 
-Test the plugin.
-
+1. Test the plugin.
 1. Create and push a tag, e.g.,
 
--   `git tag -a 1.1 -m '1.1 release'`
--   `git push origin 1.1` (do not use `git push --tags`)
+   -   `git tag -a 1.1 -m '1.1 release'`
+   -   `git push origin 1.1` (do not use `git push --tags`)
 
 1. Publish the release zip file to GitHub
 
--   [Create new release](https://github.com/AnalyticalGraphicsInc/cesium-ion-3ds-max-plugin/releases/new).
--   Select the tag you use pushed
--   Enter `Cesium ion 3ds Max 1.x` for the title
--   In the description, include the date, list of highlights and permalink to CHANGES.md, which is in the format https://github.com/AnalyticalGraphicsInc/cesium-ion-blender-addon/blob/1.xx/CHANGES.md, where 1.xx is the version number.
--   Attach the `io-cesium-ion-vx.x.x.zip` you generated during the build process.
--   Publish the release
+   -   [Create new release](https://github.com/AnalyticalGraphicsInc/cesium-ion-3ds-max-plugin/releases/new).
+   -   Select the tag you use pushed
+   -   Enter `Cesium ion 3ds Max 1.x` for the title
+   -   In the description, include the date, list of highlights and permalink to CHANGES.md, which is in the format https://github.com/AnalyticalGraphicsInc/cesium-ion-blender-addon/blob/1.xx/CHANGES.md, where 1.xx is the version number.
+   -   Attach the `io-cesium-ion-vx.x.x.zip` you generated during the build process.
+   -   Publish the release
 
 1. Tell the outreach team about the new release to have it included in the monthly release announcements/blog post and on social media.
 1. Update cesium.com with a link to the latest release zip.
