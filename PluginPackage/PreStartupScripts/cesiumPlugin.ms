@@ -2,7 +2,7 @@ struct cesiumPlugin
 (
 	SERVERGETTOKEN,
 	SERVERDIRECTORY,
-	CLIENT_ID = "56",
+	CLIENT_ID = "62",
     ION_ADDRESS = "https://cesium.com",
     API_ADDRESS = "https://api.cesium.com",
 	REDIRECT_ADDRESS = @"http://localhost:5000/",
