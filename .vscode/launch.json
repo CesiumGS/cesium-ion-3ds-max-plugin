@@ -11,7 +11,8 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/C#/bin/Debug/netcoreapp3.0/C#.dll",
-            "args": ["gettoken", "56", "http://localhost:5000/", "C:\\Users\\Patrick\\AppData\\Local\\Autodesk\\3dsMax\\2020 - 64bit\\ENU\\plugcfg_ln\\cesium_ion_token.txt"],
+            // "args": ["gettoken", "56", "http://localhost:5000/", "C:\\Users\\Patrick\\AppData\\Local\\Autodesk\\3dsMax\\2020 - 64bit\\ENU\\plugcfg_ln\\cesium_ion_token.txt"],
+            "args": [ "upload", "C:\\Users\\schmithuesen\\AppData\\Local\\Autodesk\\3dsMax\\2020 - 64bit\\ENU\\temp\\cesiumion.fbx", "Test", " ", " ", "3D_MODEL", "AUTO", "C:\\Users\\schmithuesen\\AppData\\Local\\Autodesk\\3dsMax\\2020 - 64bit\\ENU\\plugcfg_ln\\cesiumIonToken" ],
             "cwd": "${workspaceFolder}/C#",
             "stopAtEntry": false,
             "console": "internalConsole"
