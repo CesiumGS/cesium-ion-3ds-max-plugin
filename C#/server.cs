@@ -191,6 +191,11 @@ static public class Server
                             Key = uploadLocation["prefix"] + name + ".fbx"
                         };
 
+                        uploadRequest.UploadProgressEvent += (sender, args) =>
+                        {
+                            Console.WriteLine($"Progress: {args.TransferredBytes}/{args.TotalBytes}");
+                        };
+
                         await fileTransferUtility.UploadAsync(uploadRequest);
                         var completeContent = new StringContent(onComplete["fields"].ToString(), Encoding.UTF8, "application/json");
                         await client.PostAsync((string)onComplete["url"],completeContent);
