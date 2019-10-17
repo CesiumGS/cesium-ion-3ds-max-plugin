@@ -167,7 +167,7 @@ static public class Server
 
         Uri requestUri = new Uri("https://api.cesium.com/v1/assets");
 
-        using (HttpResponseMessage responseMessage = await client.PostAsync(requestUri,POSTContent))
+        using (HttpResponseMessage responseMessage = await client.PostAsync(requestUri, POSTContent))
         {
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -181,10 +181,17 @@ static public class Server
                         (string)uploadLocation["accessKey"],
                         (string)uploadLocation["secretAccessKey"],
                         (string)uploadLocation["sessionToken"]);
-                    using (AmazonS3Client s3Client = new AmazonS3Client(credentials,Amazon.RegionEndpoint.USEast1))
+                    using (var s3Client = new AmazonS3Client(credentials,Amazon.RegionEndpoint.USEast1))
+                    using (var fileTransferUtility = new TransferUtility(s3Client))
                     {
-                        var fileTransferUtility = new TransferUtility(s3Client);
-                        await fileTransferUtility.UploadAsync(filePath, (string)uploadLocation["bucket"], (string)uploadLocation["prefix"] + name + ".fbx");
+                        var uploadRequest = new TransferUtilityUploadRequest
+                        {
+                            FilePath = filePath,
+                            BucketName = uploadLocation["bucket"],
+                            Key = uploadLocation["prefix"] + name + ".fbx"
+                        };
+
+                        await fileTransferUtility.UploadAsync(uploadRequest);
                         var completeContent = new StringContent(onComplete["fields"].ToString(), Encoding.UTF8, "application/json");
                         await client.PostAsync((string)onComplete["url"],completeContent);
                     }
