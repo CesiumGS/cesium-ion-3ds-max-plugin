@@ -56,10 +56,10 @@ static public class Server
             Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]).Wait(1000*60*5);
             Console.WriteLine("End");
         }
-        if (args.Length >= 8 && args[0] == "upload")
+        if (args.Length >= 9 && args[0] == "upload")
         {
             Console.WriteLine("Start Upload");
-            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7]).Wait();
+            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]).Wait();
             Console.WriteLine("Upload finished");
         }
     }
@@ -154,7 +154,7 @@ static public class Server
         }
     }
 
-    public static async Task Upload(string filePath, string name, string description, string attribution, string sourceType, string textureFormat, string tokenPath)
+    public static async Task Upload(string filePath, string name, string description, string attribution, string sourceType, string textureFormat, string tokenPath, string logPath)
     {
         string content = String.Format(
         @"{{""name"": ""{0}"", ""description"": ""{1}"", ""attribution"": ""{2}"", ""type"": ""3DTILES"", ""options"": {{""sourceType"": ""{3}"", ""textureFormat"": ""{4}""}} }}",
@@ -193,7 +193,7 @@ static public class Server
 
                         uploadRequest.UploadProgressEvent += (sender, args) =>
                         {
-                            System.IO.File.WriteAllText("progress.log", $"{args.TransferredBytes}/{args.TotalBytes}");
+                            System.IO.File.WriteAllText(logPath, $"{args.TransferredBytes}/{args.TotalBytes}");
                         };
 
                         await fileTransferUtility.UploadAsync(uploadRequest);

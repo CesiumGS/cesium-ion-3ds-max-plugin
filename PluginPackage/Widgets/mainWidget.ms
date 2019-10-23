@@ -20,22 +20,83 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 		)
 		else
 		(
-			local filePath = (GetDir #temp + "\\cesiumion.fbx")
-			exportFile filePath #noPrompt selectedOnly:exportSelected.checked
-			local type
-			if dropDownType.selected == "3D Model" then
+			local tokenFile = openFile cesiumInstance.tokenLocation mode:"r"
+			if tokenFile == undefined then
 			(
-				type = "3D_MODEL"
+				HiddenDOSCommand cesiumInstance.SERVERGETTOKEN startpath:cesiumInstance.SERVERDIRECTORY donotwait:true
 			)
 			else
 			(
-				type = "3D_CAPTURE"
+				close tokenFile
+				free tokenFile
+				local filePath = (GetDir #temp + "\\cesiumion" + (cesiumInstance.uploadCounter as string) + ".fbx")
+				cesiumInstance.progressFilePath = (GetDir #temp + "\\progress"+ (cesiumInstance.uploadCounter as string) +".log")
+				--cesiumInstance.uploadCounter += 1
+				--exportFile filePath #noPrompt selectedOnly:exportSelected.checked
+				local type
+				if dropDownType.selected == "3D Model" then
+				(
+					type = "3D_MODEL"
+				)
+				else
+				(
+					type = "3D_CAPTURE"
+				)
+				local textureFormat
+				if useWebP.checked then textureFormat = "WEBP" else textureFormat = "AUTO"
+				local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + editDesc.text + "\" \"" + editAttribution.text + "\" " + type + " " + textureFormat + " \"" + cesiumInstance.tokenLocation + "\" \"" + cesiumInstance.progressFilePath + "\""
+				DestroyDialog cesiumfloater
+				CreateDialog cesiumInstance.uploadWidget width:600 height:130
+				cesiumInstance.uploadWidget.complete.text = "Cancel"
+				HiddenDOSCommand upload startpath:cesiumInstance.SERVERDIRECTORY donotwait:true prompt:"Uploading..."
+				fn progress = 
+				(				
+					sleep 1
+					local running = true
+					counter = 0;
+					while(running) do 
+					(
+						sleep 0.5
+						local progressFile = openFile cesiumInstance.progressFilePath mode:"r"
+						if (progressFile != undefined) then
+						(
+							local progress = readDelimitedString progressFile "/"
+							if (findString progress "Error" == undefined) then
+							(
+								local total = readLine progressFile
+								cesiumInstance.uploadWidget.lbl1.text = "Uploading: " + progress + "/" + total
+								cesiumInstance.uploadWidget.pb1.value = 100.0*(progress as integer)/(total as integer)
+								if (progress == total) then
+								(
+									cesiumInstance.uploadWidget.complete.text = "Close"
+									running = false
+								)
+							)
+							else
+							(
+								cesiumInstance.uploadWidget.complete.text = "Close"
+								running = false
+							)
+							if cesiumInstance.uploadWidget.inDialog == false then
+							(
+								running = false
+							)
+							close progressFile
+							free progressFile	
+						)
+						else
+						(
+							counter += 1
+							if (counter > 100) then running = false
+						)
+	
+					)
+				)
+				MainThread = dotNetObject "system.componentModel.backgroundWorker"	
+				sleep 1
+				dotNet.addEventHandler MainThread "DoWork" progress
+				MainThread.RunWorkerAsync()
 			)
-			local textureFormat
-			if useWebP.checked then textureFormat = "WEBP" else textureFormat = "AUTO"
-			local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + editDesc.text + "\" \"" + editAttribution.text + "\" " + type + " " + textureFormat + " \"" + cesiumInstance.tokenLocation + "\""
-			DestroyDialog cesiumfloater
-			HiddenDOSCommand upload startpath:cesiumInstance.SERVERDIRECTORY donotwait:true prompt:"Uploading..."
 		)
 	)
 	/*on buttonLogout pressed  do

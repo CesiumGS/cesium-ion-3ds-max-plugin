@@ -17,5 +17,6 @@
     <Components Description="pre-start-up scripts parts">
         <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2018" SeriesMax="2020" />
 		<ComponentEntry ModuleName="./PreStartupScripts/cesiumPlugin.ms" />
+		<ComponentEntry ModuleName="./Widgets/progressBar.ms" />
 	</Components>
 </ApplicationPackage>
