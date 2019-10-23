@@ -14,40 +14,16 @@ The project consists of two parts:
 This guide covers how to run maxScript and build .NET in Visual Studio Code.
 Template task.json and launch.json files are included in the repository.
 
+**Requirements**
+- [.NET Core SDK](https://dotnet.microsoft.com/download)
+- [AWS SDK for .NET](https://aws.amazon.com/sdk-for-net/)
+
 **Visual Studio Code**
 
 1. Clone the repository.
 1. Open the repository as workspace in VS Code.
-
-1. To deploy code directly from VS Code to 3ds Max follow this tutorial, but use the task.json from the repository instead:
-https://walterlow.com/setting-up-visual-studio-code-as-an-editor-for-3ds-maxscript/
-
-1. Change **"C:\\PATH_TO\\MXSPyCOM.exe"** in task.json to the correct file location:
-```json
-{
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
-    "version": "2.0.0",
-    "tasks": [
-       {
-          "label": "Execute Script in 3ds Max",
-          "type": "shell",
-          "command": "C:\\PATH_TO\\MXSPyCOM.exe",
-          "args": [
-             "-s",
-             "${file}"
-          ],
-          "presentation": {
-             "echo": false,
-             "reveal": "never",
-             "focus": false,
-             "panel": "dedicated"
-          },
-          "problemMatcher": [],
-       }
-    ]
-}
-```
+1. In VS Code install the *Language MaxScript* extension. (*ctrl + shift + x*)
+1. [optional] Set a shortcut to run maxScripts by going to *File->Preferences->Keyboard Shortcuts* and set a shortcut for *Tasks: Run Task*
 
 **Running the plugin**
 
@@ -68,7 +44,14 @@ To update the popup simply rerun the .ms file which creates it (for example *mai
 
 **Delete old menus**
 
-When you close and reopen 3ds Max it can happen that the previously created export menu item will get lost. In that case it will still appear in there but with the text *Missing: exportButton'mxs docs* and without any functionality. To delete it open *Customize->Customize User Interface*. Open the *Menus* tab and delete it in the panel on the right under *File->File_Export* by selecting it and pressing *entf* on your keyboard or by pressing the *Reset* button. Afterwards repeat the steps to run the plugin.
+When you close and reopen 3ds Max it can happen that the previously created export menu item will get lost. In that case it will still appear in there but with the text *Missing: exportButton'mxs docs* and without any functionality. To delete it open *Customize->Customize User Interface*.
+
+![Customize User Interface](../resetUI.PNG)
+<p align="center">
+    The Customize User Interface Dialog
+</p>
+
+Open the *Menus* tab and delete it in the panel on the right under *File->File_Export* by selecting it and pressing *delete* on your keyboard or reset all menus by pressing the *Reset* button. Afterwards repeat the steps to run the plugin.
 
 **Updating .NET**
 
@@ -86,7 +69,21 @@ command or by placing a
 break()
 ```
 in the code. The later one opens the [MAXScript Debugger](http://help.autodesk.com/view/3DSMAX/2020/ENU/?guid=GUID-E04AB16E-D5C8-4B00-81A6-E3945E97A1EB).
+![MAXScript Debugger](../debugger.PNG)
+<p align="center">
+    The MAXScript Debugger 
+</p>
 
+While in the debugger enter **?** as command to see a list of available commands.
+
+The MAXScript Debugger and the [MAXScript Listener](http://help.autodesk.com/view/3DSMAX/2020/ENU/?guid=GUID-C8019A8A-207F-48A0-985E-18D47FAD8F36) can also be opened via the *Scripting* menu in 3ds Max.
+
+![MAXScript Listener](../listener.PNG)
+<p align="center">
+    The MAXScript Listener 
+</p>
+
+The MAXScript Listener shows errors and can be used to run maxScript snippets (similar to a python console). The content of a variabel can be displayed by typing the name and pressing *Enter*.
 ### .NET
 
 Go to the Debug Panel (*crtl + shift + d*) and run in Debug Mode (*F5*).
