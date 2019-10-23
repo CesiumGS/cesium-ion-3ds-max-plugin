@@ -105,12 +105,12 @@ Learn more at [cesium.com](https://cesium.com)
 
 **PUT THIS IN THE INSTALLATION GUIDE**
 
-Requirements: .NET Core 3.0 or latest .NET Framework (previous versions might work but are unsupported)\
+Requirements: [.NET Core 3.0 or latest .NET Framework](https://dotnet.microsoft.com/download) (previous versions might work but are unsupported)\
 To install the plug-in download the .zip file from release or **[insert link]**.\
 Unpack the content to \
 %ALLUSERSPROFILE%\Autodesk\ApplicationPlugins\ (e.g. C:\ProgramData\Autodesk\ApplicationPlugins\)\
 or\
-%APPDATA%\Autodesk\ApplicationPlugins\ (e.g. C:\Users\<username>\AppData\Roaming\Autodesk\ApplicationPlugins\).
+%APPDATA%\Autodesk\ApplicationPlugins\ (e.g. C:\Users\\\<username>\AppData\Roaming\Autodesk\ApplicationPlugins\).
 
 [**If Uploaded to the Autodesk App Store**]
 
@@ -119,12 +119,16 @@ or\
 ## Tutorial
 
 Now run 3ds Max. To export your model to Cesium ion go to **File > Export > Export to Cesium ion**.\
-Since this is the first time you are using the add-on, you need to allow it to access your Cesium ion account. Click the login button to open your browser and request permissions. You may be asked for your name and password. If you are already logged in, a permissions window similar to the one below will appear immediately.\
-**[Insert image here]**\
+Since this is the first time you are using the add-on, you need to allow it to access your Cesium ion account. Click the login button to open your browser and request permissions. You may be asked for your name and password. If you are already logged in, a permissions window similar to the one below will appear immediately.
+
+![Authentification](Documentation/authentification.PNG)
+
 Click Allow, close your browser window, and return to 3ds Max.\
 Now press the menu item **File > Export > Export to Cesium ion** again.\
-The following panel will apper.\
-**[Insert image here]**
+The following panel will apper.
+
+![Upload Dialog](Documentation/upload.PNG)
+
 - **Name** (Required) A name for the ion asset you are uploading.
 - **Description** An optional description.
 - **Attribution** Any attribution you would like to appear when this asset is loaded into client visualization engines.
