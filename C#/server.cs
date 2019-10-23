@@ -193,7 +193,7 @@ static public class Server
 
                         uploadRequest.UploadProgressEvent += (sender, args) =>
                         {
-                            Console.WriteLine($"Progress: {args.TransferredBytes}/{args.TotalBytes}");
+                            System.IO.File.WriteAllText("progress.log", $"{args.TransferredBytes}/{args.TotalBytes}");
                         };
 
                         await fileTransferUtility.UploadAsync(uploadRequest);
@@ -201,15 +201,14 @@ static public class Server
                         await client.PostAsync((string)onComplete["url"],completeContent);
                     }
                 }
-            catch (AmazonS3Exception e)
-            {
-                Console.WriteLine("Error encountered on server. Message:'{0}' when writing an object", e.Message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
-            }
-
+                catch (AmazonS3Exception e)
+                {
+                    Console.WriteLine("Error encountered on server. Message:'{0}' when writing an object", e.Message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
+                }
             }
             else
             {
@@ -217,6 +216,5 @@ static public class Server
             }
         }
     }
-
 }
 
