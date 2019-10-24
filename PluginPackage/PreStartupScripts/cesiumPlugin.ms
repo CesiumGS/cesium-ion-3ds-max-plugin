@@ -8,6 +8,9 @@ struct cesiumPlugin
 	REDIRECT_ADDRESS = @"http://localhost:5000/",
 	cesiumMenuName = "Export to Cesium ion",
 	tokenLocation,
+	progressFilePath,
+	uploadCounter = 0,
+	uploadWidget,
 	fn createMenu =
 	(
 		local fileMenu = menuMan.findMenu "&File"

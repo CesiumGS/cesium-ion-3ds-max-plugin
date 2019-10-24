@@ -60,8 +60,16 @@ public class StartUp
             string query = response.Query;
             if(query.StartsWith("?code="))
             {
-                await Server.RequestToken(query);
-                await context.Response.WriteAsync("<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>");
+                bool success = await Server.RequestToken(query);
+                if (success)
+                {
+                    await context.Response.WriteAsync("<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>");
+                }
+                else
+                {
+                    await context.Response.WriteAsync("<h2>Authorization Denied!</h2>");
+                }
+
             }
             else
             {
@@ -82,10 +90,10 @@ static public class Server
             Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]).Wait(1000*60*5);
             Console.WriteLine("End");
         }
-        if (args.Length >= 8 && args[0] == "upload")
+        if (args.Length >= 9 && args[0] == "upload")
         {
             Console.WriteLine("Start Upload");
-            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7]).Wait();
+            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]).Wait();
             Console.WriteLine("Upload finished");
         }
     }
@@ -97,7 +105,7 @@ static public class Server
     private static string localUrl;
     private static string codeVerifier;
 
-    public static async Task RequestToken(string query)
+    public static async Task<bool> RequestToken(string query)
     {
         int index = query.IndexOf("&");
         string code;
@@ -129,8 +137,10 @@ static public class Server
             {
                 string contentToken = await responseMessageToken.Content.ReadAsStringAsync().ConfigureAwait(false);
                 System.IO.File.WriteAllText(localUrl,contentToken);
+                return true;
             }
         }
+        return false;
     }
 
     private static void StartServer()
@@ -188,7 +198,7 @@ static public class Server
         }
     }
 
-    public static async Task Upload(string filePath, string name, string description, string attribution, string sourceType, string textureFormat, string tokenPath)
+    public static async Task Upload(string filePath, string name, string description, string attribution, string sourceType, string textureFormat, string tokenPath, string logPath)
     {
         string content = String.Format(
         @"{{""name"": ""{0}"", ""description"": ""{1}"", ""attribution"": ""{2}"", ""type"": ""3DTILES"", ""options"": {{""sourceType"": ""{3}"", ""textureFormat"": ""{4}""}} }}",
@@ -201,7 +211,7 @@ static public class Server
 
         Uri requestUri = new Uri("https://api.cesium.com/v1/assets");
 
-        using (HttpResponseMessage responseMessage = await client.PostAsync(requestUri,POSTContent))
+        using (HttpResponseMessage responseMessage = await client.PostAsync(requestUri, POSTContent))
         {
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -215,30 +225,44 @@ static public class Server
                         (string)uploadLocation["accessKey"],
                         (string)uploadLocation["secretAccessKey"],
                         (string)uploadLocation["sessionToken"]);
-                    using (AmazonS3Client s3Client = new AmazonS3Client(credentials,Amazon.RegionEndpoint.USEast1))
+                    using (var s3Client = new AmazonS3Client(credentials,Amazon.RegionEndpoint.USEast1))
+                    using (var fileTransferUtility = new TransferUtility(s3Client))
                     {
-                        var fileTransferUtility = new TransferUtility(s3Client);
-                        await fileTransferUtility.UploadAsync(filePath, (string)uploadLocation["bucket"], (string)uploadLocation["prefix"] + name + ".fbx");
+                        var uploadRequest = new TransferUtilityUploadRequest
+                        {
+                            FilePath = filePath,
+                            BucketName = uploadLocation["bucket"],
+                            Key = uploadLocation["prefix"] + name + ".fbx"
+                        };
+
+                        uploadRequest.UploadProgressEvent += (sender, args) =>
+                        {
+                            System.IO.File.WriteAllText(logPath, $"{args.TransferredBytes}/{args.TotalBytes}");
+                        };
+
+                        await fileTransferUtility.UploadAsync(uploadRequest);
                         var completeContent = new StringContent(onComplete["fields"].ToString(), Encoding.UTF8, "application/json");
                         await client.PostAsync((string)onComplete["url"],completeContent);
+                        string id = (string)uploadLocation["prefix"];
+                        id = id.Substring(id.IndexOf("/"));
+                        OpenBrowser(@"https://cesium.com/ion/assets" + id);
                     }
                 }
-            catch (AmazonS3Exception e)
-            {
-                Console.WriteLine("Error encountered on server. Message:'{0}' when writing an object", e.Message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
-            }
-
+                catch (AmazonS3Exception e)
+                {
+                   System.IO.File.WriteAllText(logPath, String.Format("Error encountered on server. Message:'{0}' when writing an object", e.Message));
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.WriteAllText(logPath, String.Format("Error encountered on server. Message:'{0}' when writing an object", e.Message));
+                }
             }
             else
             {
                 string error = await responseMessage.Content.ReadAsStringAsync();
+                System.IO.File.WriteAllText(logPath, "Error: " + error);
             }
         }
     }
-
 }
 
