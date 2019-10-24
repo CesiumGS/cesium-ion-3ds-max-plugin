@@ -1,4 +1,4 @@
-rollout uploadProgress "Uploading..." width:600 height:130
+rollout uploadProgress "Uploading to Cesium ion..." width:600 height:130
 (
 	progressBar 'pb1' "ProgressBar" pos:[35,65] width:530 height:10 value:0 align:#left
 	label 'lbl1' "Uploading: " pos:[35,20] width:530 height:32 align:#left

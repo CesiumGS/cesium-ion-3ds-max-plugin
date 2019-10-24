@@ -53,14 +53,25 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 					DestroyDialog cesiumfloater
 					CreateDialog cesiumInstance.uploadWidget width:600 height:130
 					cesiumInstance.uploadWidget.complete.text = "Cancel"
-					HiddenDOSCommand upload startpath:cesiumInstance.SERVERDIRECTORY donotwait:true prompt:"Uploading..."
+					HiddenDOSCommand upload startpath:cesiumInstance.SERVERDIRECTORY donotwait:true prompt:"Uploading to Cesium ion..."
 					fn progress = 
 					(
-						local progressFilePath = cesiumInstance.progressFilePath				
-						sleep 1
+						local progressFilePath = cesiumInstance.progressFilePath
+						do 
+						(
+							local progressFile = openFile progressFilePath mode:"r"
+							if (progressFile != undefined) then
+							(
+								local check = eof progressFile
+								close progressFile
+								free progressFile
+							)
+						)
+						while check
+								
 						local running = true
 						local counter = 0;
-						local sleepTime = 0.5
+						local sleepTime = 0.1
 						local progress = 0
 						while(running) do 
 						(
@@ -76,8 +87,8 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 									progress = progress as integer
 									total = total as integer
 									cesiumInstance.uploadWidget.pb1.value = 100.0*progress/total
-									local speedKiB = (progress - progressTmp) / 1024.0 / sleepTime
-									cesiumInstance.uploadWidget.lbl1.text = "Uploading: " + (progress / 1024.0) as string + "/" + (total / 1024.0) as string + "\n " + speedKiB as string + "KiB/sec"
+									local speedKiB = (progress - progressTmp) / 1024 / sleepTime
+									cesiumInstance.uploadWidget.lbl1.text = "Uploading: " + (progress / 1024) as string + " KiB / " + (total / 1024) as string + " KiB\n " + speedKiB as string + " KiB/sec"
 									if (progress == total) then
 									(
 										cesiumInstance.uploadWidget.lbl1.text = "Upload Finished"
@@ -104,7 +115,6 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 					MainThread = dotNetObject "system.componentModel.backgroundWorker"
 					dotNet.addEventHandler MainThread "DoWork" progress
 					cesiumInstance.progressFilePath = progressFilePath
-					sleep 1
 					MainThread.RunWorkerAsync()
 				)				
 			)
