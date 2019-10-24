@@ -25,7 +25,7 @@ struct cesiumPlugin
 		fileMenu = fileMenu.getSubMenu()
 		if (notFound == false) then
 		(
-			local notFound = true
+			notFound = true
 			local exportMenu
 			for i = 1 to fileMenu.numItems() while notFound do
 			(
@@ -39,7 +39,7 @@ struct cesiumPlugin
 				for i = 1 to exportMenu.numItems() while notFound do
 				(
 					item = exportMenu.getItem(i)
-					if item.getTitle() == ::cesiumMenuName then notFound = false
+					if item.getTitle() == cesiumMenuName then notFound = false
 				)
 				if notFound then
 				(
