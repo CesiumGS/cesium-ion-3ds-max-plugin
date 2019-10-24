@@ -84,7 +84,7 @@ README.md               # Projects landing page. Should be readable, and work as
   <img src="https://github.com/AnalyticalGraphicsInc/cesium/wiki/logos/Cesium_Logo_Color.jpg" width="50%" />
 </p>
 
-**[REPLACEME]** A functional description in one to two sentence.
+The Cesium ion 3ds Max add-on enables you to effortlessly publish and stream 3D models on the web.
 
 Leveraging Cesium ion and the power of 3D Tiles, even multi-gigabyte models can be streamed to any device without having to download the entire tileset up front. By visualizing 3D Tiles with CesiumJS, you can fuse your models with other datasets, add geospatial context to place it at a real world location, or overlay additional details and analysis.
 
@@ -102,6 +102,46 @@ Learn more at [cesium.com](https://cesium.com)
 ## Installation
 
 **[REPLACEME]** Read the [installation guide](https://BROKEN_LINK/) to get started.
+
+**PUT THIS IN THE INSTALLATION GUIDE**
+
+Requirements: [.NET Core 3.0 Runtime & Hosting Bundle](https://dotnet.microsoft.com/download/thank-you/dotnet-runtime-3.0.0-windows-hosting-bundle-installer) (previous versions might work but are unsupported)\
+To install the plug-in download the .zip file from release or **[insert link]**.\
+Unpack the content to \
+%ALLUSERSPROFILE%\Autodesk\ApplicationPlugins\ (e.g. C:\ProgramData\Autodesk\ApplicationPlugins\)\
+or\
+%APPDATA%\Autodesk\ApplicationPlugins\ (e.g. C:\Users\\\<username>\AppData\Roaming\Autodesk\ApplicationPlugins\).
+
+[**If Uploaded to the Autodesk App Store**]
+
+[Or install it via the Autodesk App Store]()
+
+## Tutorial
+
+Now run 3ds Max. To export your model to Cesium ion go to **File > Export > Export to Cesium ion**.\
+Since this is the first time you are using the add-on, you need to allow it to access your Cesium ion account. Click the login button to open your browser and request permissions. You may be asked for your name and password. If you are already logged in, a permissions window similar to the one below will appear immediately.
+
+![Authentification](Documentation/authentification.PNG)
+
+Click Allow, close your browser window, and return to 3ds Max.\
+Now press the menu item **File > Export > Export to Cesium ion** again.\
+The following panel will apper.
+
+![Upload Dialog](Documentation/upload.PNG)
+
+- **Name** (Required) A name for the ion asset you are uploading.
+- **Description** An optional description.
+- **Attribution** Any attribution you would like to appear when this asset is loaded into client visualization engines.
+- **Model Type** (Required) A hint to ion about the type of model you are uploading. For most Blender models, simply select 3D Model. If you are loading a mesh that originated from a 3D scan, LIDAR, or photogrammetry processes, select 3D Capture instead.
+- **Use WebP images** If enabled, will produce a tileset with WebP images, which are typically 25–34% smaller than equivalent JPEG images, leading to faster streaming and reduced data usage. 3D Tiles produced with this option requires a client that supports the glTF EXT_texture_webp extension, such as CesiumJS 1.54 or newer, and a browser that supports WebP, such as Chrome or Firefox 65 and newer.
+- **Export only selected** If enabled, only previously selected items will be uploaded.
+
+For this tutorial, enter any name you want and select **3D Model** as the **Model Type**.
+
+Next click **Upload to Cesium ion**
+
+At this point a progress bar will appear and the model will be uploaded to Cesium ion. 
+
 
 ## Contributing
 

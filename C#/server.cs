@@ -7,6 +7,7 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Json;
+using System.Security.Cryptography;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
@@ -17,6 +18,31 @@ using Amazon.S3.Transfer;
 using Amazon.S3;
 using Amazon.Runtime;
 
+
+public class RandomString
+{
+    internal static readonly char[] chars =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray(); 
+
+    public static string GetUniqueString(int size)
+    {            
+        byte[] data = new byte[4*size];
+        using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
+        {
+            crypto.GetBytes(data);
+        }
+        StringBuilder result = new StringBuilder(size);
+        for (int i = 0; i < size; i++)
+        {
+            var rnd = BitConverter.ToUInt32(data, i * 4);
+            var idx = rnd % chars.Length;
+
+            result.Append(chars[idx]);
+        }
+
+        return result.ToString();
+    }
+}
 public class StartUp
 {
     public void Configure(IApplicationBuilder app, Microsoft.Extensions.Hosting.IHostApplicationLifetime lifeTime)
@@ -77,6 +103,7 @@ static public class Server
     private static string clientID;
     private static string redirectUri;
     private static string localUrl;
+    private static string codeVerifier;
 
     public static async Task<bool> RequestToken(string query)
     {
@@ -99,7 +126,8 @@ static public class Server
         { "grant_type", "authorization_code" },
         { "client_id", clientID },
         { "code", code },
-        { "redirect_uri", redirectUri }
+        { "redirect_uri", redirectUri },
+        { "code_verifier", codeVerifier}
         };
         var POSTContent = new FormUrlEncodedContent(parameters);
 
@@ -121,9 +149,9 @@ static public class Server
         {
             CreateHostBuilder().Build().Run();
         }
-        catch (Exception)
+        catch (Exception e)
         {
-
+            Console.WriteLine("Could not create local server. Message:'{0}'", e.Message);
         }
     }
     private static IHostBuilder CreateHostBuilder(params string[] args) =>
@@ -138,9 +166,15 @@ static public class Server
         Server.redirectUri = redirectUri;
         Server.clientID = clientID;
         Server.localUrl = localUrl;
+        SHA256 encrypter = SHA256.Create();
+        codeVerifier = RandomString.GetUniqueString(32);
+        var hashed = encrypter.ComputeHash(Encoding.UTF8.GetBytes(codeVerifier));
+        var encoded = Convert.ToBase64String(hashed);
+        string codeChallenge = encoded.Replace("=","").Replace('+','-').Replace('/','_');
         Uri uri = new Uri(remoteUrl);
         string query = "?response_type="+ Uri.EscapeDataString(responseType) + "&client_id=" + Uri.EscapeDataString(clientID) 
-        + "&redirect_uri=" + Uri.EscapeDataString(redirectUri) + "&scope=" + Uri.EscapeDataString(scope);
+        + "&redirect_uri=" + Uri.EscapeDataString(redirectUri) + "&scope=" + Uri.EscapeDataString(scope)
+        + "&code_challenge=" + codeChallenge + "&code_challenge_method=S256";
         uri = new Uri(uri,query);
         Task thread = Task.Factory.StartNew(()=>StartServer());
         OpenBrowser(uri.ToString());
