@@ -34,8 +34,16 @@ public class StartUp
             string query = response.Query;
             if(query.StartsWith("?code="))
             {
-                await Server.RequestToken(query);
-                await context.Response.WriteAsync("<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>");
+                bool success = await Server.RequestToken(query);
+                if (success)
+                {
+                    await context.Response.WriteAsync("<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>");
+                }
+                else
+                {
+                    await context.Response.WriteAsync("<h2>Authorization Denied!</h2>");
+                }
+
             }
             else
             {
@@ -70,7 +78,7 @@ static public class Server
     private static string redirectUri;
     private static string localUrl;
 
-    public static async Task RequestToken(string query)
+    public static async Task<bool> RequestToken(string query)
     {
         int index = query.IndexOf("&");
         string code;
@@ -101,8 +109,10 @@ static public class Server
             {
                 string contentToken = await responseMessageToken.Content.ReadAsStringAsync().ConfigureAwait(false);
                 System.IO.File.WriteAllText(localUrl,contentToken);
+                return true;
             }
         }
+        return false;
     }
 
     private static void StartServer()
@@ -199,20 +209,24 @@ static public class Server
                         await fileTransferUtility.UploadAsync(uploadRequest);
                         var completeContent = new StringContent(onComplete["fields"].ToString(), Encoding.UTF8, "application/json");
                         await client.PostAsync((string)onComplete["url"],completeContent);
+                        string id = (string)uploadLocation["prefix"];
+                        id = id.Substring(id.IndexOf("/"));
+                        OpenBrowser(@"https://cesium.com/ion/assets" + id);
                     }
                 }
                 catch (AmazonS3Exception e)
                 {
-                    Console.WriteLine("Error encountered on server. Message:'{0}' when writing an object", e.Message);
+                   System.IO.File.WriteAllText(logPath, String.Format("Error encountered on server. Message:'{0}' when writing an object", e.Message));
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
+                    System.IO.File.WriteAllText(logPath, String.Format("Error encountered on server. Message:'{0}' when writing an object", e.Message));
                 }
             }
             else
             {
                 string error = await responseMessage.Content.ReadAsStringAsync();
+                System.IO.File.WriteAllText(logPath, "Error: " + error);
             }
         }
     }
