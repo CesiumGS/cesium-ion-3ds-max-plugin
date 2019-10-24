@@ -105,7 +105,7 @@ Learn more at [cesium.com](https://cesium.com)
 
 **PUT THIS IN THE INSTALLATION GUIDE**
 
-Requirements: [.NET Core 3.0 or latest .NET Framework](https://dotnet.microsoft.com/download) (previous versions might work but are unsupported)\
+Requirements: [.NET Core 3.0 Runtime & Hosting Bundle](https://dotnet.microsoft.com/download/thank-you/dotnet-runtime-3.0.0-windows-hosting-bundle-installer) (previous versions might work but are unsupported)\
 To install the plug-in download the .zip file from release or **[insert link]**.\
 Unpack the content to \
 %ALLUSERSPROFILE%\Autodesk\ApplicationPlugins\ (e.g. C:\ProgramData\Autodesk\ApplicationPlugins\)\
