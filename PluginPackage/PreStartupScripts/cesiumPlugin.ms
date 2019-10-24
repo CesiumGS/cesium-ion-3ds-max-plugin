@@ -22,6 +22,7 @@ struct cesiumPlugin
 			if fileMenu.getTitle() == "&File" then notFound = false
 		)
 		local newMenu = false
+		fileMenu = fileMenu.getSubMenu()
 		if (notFound == false) then
 		(
 			local notFound = true

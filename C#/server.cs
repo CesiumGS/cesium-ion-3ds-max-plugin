@@ -58,22 +58,32 @@ public class StartUp
             string url = context.Request.GetDisplayUrl();
             Uri response = new Uri(url);
             string query = response.Query;
+            string htmlFile = "%RESPONSE%";
+            try
+            {
+                htmlFile = System.IO.File.ReadAllText("index.html");
+            }
+            catch (Exception)
+            {
+
+            }
+
             if(query.StartsWith("?code="))
             {
                 bool success = await Server.RequestToken(query);
                 if (success)
                 {
-                    await context.Response.WriteAsync("<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>");
+                    await context.Response.WriteAsync(htmlFile.Replace("%RESPONSE%","<span>Authorization Complete!</span><h3>Return to 3ds Max to begin your export!</h3>"));
                 }
                 else
                 {
-                    await context.Response.WriteAsync("<h2>Authorization Denied!</h2>");
+                    await context.Response.WriteAsync(htmlFile.Replace("%RESPONSE%","<h2>Authorization Denied!</h2>"));
                 }
 
             }
             else
             {
-                await context.Response.WriteAsync("<h2>Authorization Denied!</h2>");
+                await context.Response.WriteAsync(htmlFile.Replace("%RESPONSE%","<h2>Authorization Denied!</h2>"));
             }
             
             lifeTime.StopApplication();
