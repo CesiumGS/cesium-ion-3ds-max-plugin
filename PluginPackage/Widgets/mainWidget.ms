@@ -36,6 +36,7 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 				close toClose
 				free toClose
 				cesiumInstance.uploadCounter += 1
+				FbxExporterSetParam "EmbedTextures" true
 				if ((exportFile filePath #noPrompt selectedOnly:exportSelected.checked) and logFileCreated) then
 				(
 					local type
