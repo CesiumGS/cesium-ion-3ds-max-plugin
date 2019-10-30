@@ -40,7 +40,10 @@
              "-c",
              "Release",
              "-o",
-             "../PluginPackage/C#/"
+             "../PluginPackage/C#/",
+             "-r",
+             "win-x64",
+             "/p:PublishSingleFile=true"
          ],
          "options": {
              "cwd": "${workspaceFolder}/C#"
