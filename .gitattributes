@@ -1,0 +1,4 @@
+third_party/* linguist-vendored
+Documentation/* linguist-documentation
+*.md linguist-documentation
+PluginPackage/C#/index.html linguist-detectable=false
