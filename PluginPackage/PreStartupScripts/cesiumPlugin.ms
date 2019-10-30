@@ -81,6 +81,10 @@ struct cesiumPlugin
 			SERVERDIRECTORY = path + @"C#\"
 			tokenLocation = (GetDir #plugcfg_ln + "\\cesiumIonToken")
 			SERVERGETTOKEN = "C#.exe" + " gettoken " + CLIENT_ID + " " + REDIRECT_ADDRESS + " \"" + tokenLocation + "\""
+			local tmpFiles = getFiles (GetDir #temp + "\\cesiumion*.fbx")
+			for f in tmpFiles do (deleteFile f)
+			tmpFiles = getFiles (GetDir #temp + "\\progress*.log")
+			for f in tmpFiles do (deleteFile f)
 	)
 )
 
