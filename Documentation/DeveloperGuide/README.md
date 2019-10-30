@@ -14,23 +14,24 @@ The project consists of two parts:
 This guide covers how to run maxScript and build .NET in Visual Studio Code.
 Template task.json and launch.json files are included in the repository.
 
-**Requirements**
+#### Requirements
 - [.NET Core SDK](https://dotnet.microsoft.com/download)
 - [AWS SDK for .NET](https://aws.amazon.com/sdk-for-net/)
 
-**Visual Studio Code**
+#### Visual Studio Code
 
 1. Clone the repository.
 1. Open the repository as workspace in VS Code.
 1. In VS Code install the *Language MaxScript* extension. (*ctrl + shift + x*)
 1. [optional] Set a shortcut to run maxScripts by going to *File->Preferences->Keyboard Shortcuts* and set a shortcut for *Tasks: Run Task*
 
-**Running the plugin**
+#### Running the plugin
 
 Create the Windows Environment Variable ADSK_APPLICATION_PLUGINS and set it to your repository.
 The plugin should now be loaded on start-up.
 
 To manually run the plugin:
+1. Start 3ds Max (to run scripts from VS Code 3ds Max has to be open)
 1. Open *PluginPackage/PreStartupScripts/cesiumPlugin.ms*.
 1. Run it with the Task **Execute Script in 3ds Max**.
 1. Open *PluginPackage/Widgets/nameRequiredWidget.ms* and run it. This creates a warning popup.
@@ -38,11 +39,11 @@ To manually run the plugin:
 1. Next open *PluginPackage/PostStartupScripts/addMenus.ms* and run it. This will add the menu item in 3ds Max under *File->Export*.
 Running these files in a different order will create an error in 3ds Max.
 
-**Updating popups**
+#### Updating popups
 
 To update the popup simply rerun the .ms file which creates it (for example *mainWidget.ms*).
 
-**Delete old menus**
+#### Delete old menus
 
 When you close and reopen 3ds Max it can happen that the previously created export menu item will get lost. In that case it will still appear in there but with the text *Missing: exportButton'mxs docs* and without any functionality. To delete it open *Customize->Customize User Interface*.
 
@@ -51,9 +52,9 @@ When you close and reopen 3ds Max it can happen that the previously created expo
     The Customize User Interface Dialog
 </p>
 
-Open the *Menus* tab and delete it in the panel on the right under *File->File_Export* by selecting it and pressing *delete* on your keyboard or reset all menus by pressing the *Reset* button. Afterwards repeat the steps to run the plugin.
+Open the *Menus* tab and delete it in the panel on the right under *File->File-Export* by selecting it and pressing *delete* on your keyboard or reset all menus by pressing the *Reset* button. Afterwards repeat the steps to run the plugin.
 
-**Updating .NET**
+#### Updating .NET
 
 Press *crtl + shift + b*. This builds the project for **Release** and places the binaries in the right folder (./PluginPackage/C#/).
 
@@ -86,11 +87,12 @@ The MAXScript Debugger and the [MAXScript Listener](http://help.autodesk.com/vie
 The MAXScript Listener shows errors and can be used to run maxScript snippets (similar to a python console). The content of a variabel can be displayed by typing the name and pressing *Enter*.
 ### .NET
 
-Go to the Debug Panel (*crtl + shift + d*) and run in Debug Mode (*F5*).
+1. Open *tasks.json* and change the arguments in brackets **<>** with the correct path. The first argument is the funtion name, the others are the function parameters. Instead of using arguments you can also change the main function in *server.cs* to do the desired task. But don't forget to change it back afterwards.
+1. Go to the Debug Panel (*crtl + shift + d*) and run in Debug Mode (*F5*).
 
 ## Releases
 
-**Create the release package**
+#### Create the release package
 
 1. Pull down the latest master branch: `git pull origin master`
 1. Modify `PluginPackage/PackageContents.xml` and increment the minor version only:
@@ -100,12 +102,17 @@ Go to the Debug Panel (*crtl + shift + d*) and run in Debug Mode (*F5*).
 1. Make sure the repository is clean `git clean -xdf`. __This will delete all files not already in the repository.__
 1. Pack PluginPackage into `io-cesium-ion-vx.x.x.zip` (were x.x.x will be the version)
 
-**Testing**
+#### Testing
 
-1. **[REPLACEME]** COMPLETE INSTRUCTIONS
-1. **[REPLACEME]** Run through common use cases and evaluate the add-on works as expected. Try breaking things, standard integration tests. CI tests are fantastic but depending on the scale of the project may not be required.
+1. Reset the User Interface in 3ds max as described in [Delete old menus](#delete-old-menus)
+1. Close 3ds max
+1. Delete the tokenfile at *%LOCALAPPDATA%/Autodesk/3dsMax/\<ReleaseNumber> - 64bit/ENU/plugcfg_ln/cesiumIonToken*
+1. Delete all files named *cesiumion\<number>.fbx* and *progress\<number>.log* in *%LOCALAPPDATA%/Autodesk/3dsMax/\<ReleaseNumber> - 64bit/ENU/temp/*
+1. Start 3ds max
+1. Try out the pluging
+1. Provoke errors by interrupting the internet connection while uploading etc.
 
-**Release**
+#### Release
 
 1. Test the plugin.
 1. Create and push a tag, e.g.,
