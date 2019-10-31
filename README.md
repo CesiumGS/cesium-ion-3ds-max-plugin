@@ -94,7 +94,8 @@ For this tutorial, enter any name you want and select **3D Model** as the **Mode
 
 Next click **Upload to Cesium ion**
 
-At this point a progress bar will appear and the model will be uploaded to Cesium ion. 
+At this point a progress bar will appear and the model will be uploaded to Cesium ion.
+After the upload has finished. 3ds Max will then launch a web browser so you can view the asset in the ion dashboard. If not all textures are displayed correctly on the dashboard, you can try to bake them before exporting.
 
 
 ## Contributing
