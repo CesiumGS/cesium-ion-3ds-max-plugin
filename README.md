@@ -1,31 +1,6 @@
 ## ↓ **REMOVE BELOW BEFORE RELEASE** ↓
 
-Use this checklist to setup your GitHub repository before it's inital release.
 
-#### Notes
-
--   All documentation should be placed in the `Documentation` folder with another folder in Camel Case to denote the subject and a `README.md` with the relevant content. All media such as images and diagrams should be placed in the new folder. Anything contained in a subject folder should strictly relate to documentation.
--   The file structure should go as follows:
-
-```
-Documentation
-    DeveloperGuide      # Documentation Subject
-        README.md       # Relevant notes that will display when folder is focused.
-        <asset>.png/jpg # All media related content be placed in the documentation folder
-CHANGELOG.md            # Release notes that mirror the releases page of GitHub
-CODE_OF_CONDUCT.md      # Cesium's standard Code of Conduct (DO NOT CHANGE)
-LICENSE                 # Cesium's standard LICENSE for integrations (DO NOT CHANGE)
-ThirdPary.json          # Reference of the projects immediate third party libraries
-README.md               # Projects landing page. Should be readable, and work as an index
-```
-
-#### Pre-Release Checklist
-
-**README**
-
--   [ ] Add a functional description that is no longer than two sentences to outline features.
--   [ ] Take screenshots of the application running reflecting the raw appplication state, uploading to ion, and asset available in ion. Feel free to take some creative liberties here.
--   [ ] Place screenshots in screenshot section.
 -   [ ] Fix installation instructions link
 
 **Documentation**
@@ -33,12 +8,6 @@ README.md               # Projects landing page. Should be readable, and work as
 -   Under the `Release` section of the _DeveloperGuide_
     -   [ ] Change the release url
     -   [ ] _IF_ the integration provides a custom marketplace provide relevant information
-    -   [ ] Fill in the **Create the release package** section
-    -   [ ] Fill in the **Testing** section
-    -   [ ] Fill in the **Release** section
--   In the _DeveloperGuide_
-    -   [ ] **Either** remove the development section **or** provide development tips
-    -   [ ] Fill in the **Development** section
 
 **Changes**
 
@@ -55,23 +24,8 @@ README.md               # Projects landing page. Should be readable, and work as
 
 -   [ ] Add feature list to `CHANGES.md`
 
-**Third Party**
-
--   [ ] Add all third part libraries in the following format to `ThirdPary.json`
--   [ ] Check all licenses are respected in repository per library
-
-```
-{
-    "name": "[Name of Library]",
-    "url": "[Url to Library]",
-    "license": "[License of Library]"
-}
-```
-
 **Misc.**
 
--   [ ] Search for "[REPLACEME]" to make sure all content has been updated
--   [ ] If there are files that should not be tracked ensure they are added to the `.gitignore` and removed from tracking
 -   [ ] Remove this checklist from the README
 -   [ ] Is installation information available on the website or somewhere else?
 -   [ ] Is a blog post in progress?
@@ -140,7 +94,8 @@ For this tutorial, enter any name you want and select **3D Model** as the **Mode
 
 Next click **Upload to Cesium ion**
 
-At this point a progress bar will appear and the model will be uploaded to Cesium ion. 
+At this point a progress bar will appear and the model will be uploaded to Cesium ion.
+After the upload has finished. 3ds Max will then launch a web browser so you can view the asset in the ion dashboard. If not all textures are displayed correctly on the dashboard, you can try to bake them before exporting.
 
 
 ## Contributing

@@ -1,10 +1,5 @@
 # Development
 
-Follow these steps to run the addon directly from source so that your changes will be reflected in Blender.
-
-1. **[REPLACEME]** COMPLETE INSTRUCTIONS
-1. Discuss how to get the repository running on any operating system (including Unix, Linux and Windows). The steps should outline from cloning the repository to having the application running in a development state.
-
 3ds Max runs only on Windows, therefore the following documention is for Windows only.
 
 The project consists of two parts:
