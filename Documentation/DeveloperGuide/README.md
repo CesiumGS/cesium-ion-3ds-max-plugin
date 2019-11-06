@@ -9,9 +9,10 @@ The project consists of two parts:
 This guide covers how to run maxScript and build .NET in Visual Studio Code.
 Template task.json and launch.json files are included in the repository.
 
-#### Requirements
-- [.NET Core SDK](https://dotnet.microsoft.com/download)
-- [AWS SDK for .NET](https://aws.amazon.com/sdk-for-net/)
+#### Requirements for building, running and debugging of the .NET code
+These are not required, if only MAXScript files are changed.
+- **.NET Core SDK**: Follow [this link](https://dotnet.microsoft.com/download) select **Download .NET Core SDK** and follow the instructions.
+- **AWS SDK for .NET** is already included in the project file via NuGet. Therefore, building the project should automatically download the AWS SDK. If the Amazon.* namespaces are unavailable nevertheless, follow [this link](https://aws.amazon.com/sdk-for-net/) select **Download MSI Installer** and install the AWS Tools for Windows.
 
 #### Visual Studio Code
 
@@ -95,7 +96,7 @@ The MAXScript Listener shows errors and can be used to run maxScript snippets (s
 1. Proofread and update CHANGES.md to capture any changes since last release.
 1. Commit and push these changes directly to master.
 1. Make sure the repository is clean `git clean -xdf`. __This will delete all files not already in the repository.__
-1. Pack PluginPackage into `io-cesium-ion-vx.x.x.zip` (were x.x.x will be the version)
+1. Pack the content of the *PluginPackage* folder and name it `io-cesium-ion-vx.x.x.zip` (were x.x.x will be the version)
 
 #### Testing
 
@@ -103,9 +104,16 @@ The MAXScript Listener shows errors and can be used to run maxScript snippets (s
 1. Close 3ds max
 1. Delete the tokenfile at *%LOCALAPPDATA%/Autodesk/3dsMax/\<ReleaseNumber> - 64bit/ENU/plugcfg_ln/cesiumIonToken*
 1. Delete all files named *cesiumion\<number>.fbx* and *progress\<number>.log* in *%LOCALAPPDATA%/Autodesk/3dsMax/\<ReleaseNumber> - 64bit/ENU/temp/*
+1. Unpack the created .zip file to\
+%ALLUSERSPROFILE%\Autodesk\ApplicationPlugins\ (e.g. C:\ProgramData\Autodesk\ApplicationPlugins)\
+or\
+%APPDATA%\Autodesk\ApplicationPlugins\ (e.g. C:\Users\<username>\AppData\Roaming\Autodesk\ApplicationPlugins)\
+**The location of PackageContents.xml has to be *..\ApplicationPlugins\io-cesium-ion-vx.x.x\PackageContents.xml*. If this is not the case after unpacking, pack the release again accordingly**
+1. Rename your repository or delete the path to your repository in the ADSK_APPLICATION_PLUGINS enviroment variable.
 1. Start 3ds max
 1. Try out the pluging
 1. Provoke errors by interrupting the internet connection while uploading etc.
+1. After testing remove the previously copied *PluginPackage* folder and restore your repository name or ADSK_APPLICATION_PLUGINS enviroment variable.
 
 #### Release
 
