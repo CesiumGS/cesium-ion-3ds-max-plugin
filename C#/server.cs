@@ -256,7 +256,8 @@ static public class Server
                         string id = (string)uploadLocation["prefix"];
                         id = id.Substring(id.IndexOf("/"));
                         OpenBrowser(@"https://cesium.com/ion/assets" + id);
-                    }
+                        Thread.Sleep(10);
+                    } 
                 }
                 catch (AmazonS3Exception e)
                 {
