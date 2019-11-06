@@ -59,7 +59,6 @@ Learn more at [cesium.com](https://cesium.com)
 
 **PUT THIS IN THE INSTALLATION GUIDE**
 
-Requirements: [.NET Core 3.0 Runtime & Hosting Bundle](https://dotnet.microsoft.com/download/thank-you/dotnet-runtime-3.0.0-windows-hosting-bundle-installer) (previous versions might work but are unsupported)\
 To install the plug-in download the .zip file from release or **[insert link]**.\
 Unpack the content to \
 %ALLUSERSPROFILE%\Autodesk\ApplicationPlugins\ (e.g. C:\ProgramData\Autodesk\ApplicationPlugins\)\
@@ -95,7 +94,8 @@ For this tutorial, enter any name you want and select **3D Model** as the **Mode
 Next click **Upload to Cesium ion**
 
 At this point a progress bar will appear and the model will be uploaded to Cesium ion.
-After the upload has finished. 3ds Max will then launch a web browser so you can view the asset in the ion dashboard. If not all textures are displayed correctly on the dashboard, you can try to bake them before exporting.
+After the upload has finished. 3ds Max will then launch a web browser so you can view the asset in the ion dashboard. If not all textures are displayed correctly on the dashboard, you can try to bake them before exporting.\
+[Workflow: Texture Baking by Autodesk](https://knowledge.autodesk.com/support/3ds-max/learn-explore/caas/CloudHelp/cloudhelp/2020/ENU/3DSMax-Rendering/files/GUID-37414F9F-5E33-4B1C-A77F-547D0B6F511A-htm.html).
 
 
 ## Contributing
