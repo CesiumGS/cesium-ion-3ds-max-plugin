@@ -96,7 +96,7 @@ The MAXScript Listener shows errors and can be used to run maxScript snippets (s
 1. Proofread and update CHANGES.md to capture any changes since last release.
 1. Commit and push these changes directly to master.
 1. Make sure the repository is clean `git clean -xdf`. __This will delete all files not already in the repository.__
-1. Pack PluginPackage into `io-cesium-ion-vx.x.x.zip` (were x.x.x will be the version)
+1. Pack the content of the *PluginPackage* folder and name it `io-cesium-ion-vx.x.x.zip` (were x.x.x will be the version)
 
 #### Testing
 
@@ -104,9 +104,16 @@ The MAXScript Listener shows errors and can be used to run maxScript snippets (s
 1. Close 3ds max
 1. Delete the tokenfile at *%LOCALAPPDATA%/Autodesk/3dsMax/\<ReleaseNumber> - 64bit/ENU/plugcfg_ln/cesiumIonToken*
 1. Delete all files named *cesiumion\<number>.fbx* and *progress\<number>.log* in *%LOCALAPPDATA%/Autodesk/3dsMax/\<ReleaseNumber> - 64bit/ENU/temp/*
+1. Unpack the created .zip file to\
+%ALLUSERSPROFILE%\Autodesk\ApplicationPlugins\ (e.g. C:\ProgramData\Autodesk\ApplicationPlugins)\
+or\
+%APPDATA%\Autodesk\ApplicationPlugins\ (e.g. C:\Users\<username>\AppData\Roaming\Autodesk\ApplicationPlugins)\
+**The location of PackageContents.xml has to be ..\ApplicationPlugins\io-cesium-ion-vx.x.x\PackageContents.xml. If this is not the case after unpacking, pack the release again accordingly**
+1. Rename your repository or delete the path to your repository in the ADSK_APPLICATION_PLUGINS enviroment variable.
 1. Start 3ds max
 1. Try out the pluging
 1. Provoke errors by interrupting the internet connection while uploading etc.
+1. After testing remove the previously copied *PluginPackage* folder and restore your repository name or ADSK_APPLICATION_PLUGINS enviroment variable.
 
 #### Release
 
