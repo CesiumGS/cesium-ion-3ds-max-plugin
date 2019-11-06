@@ -96,7 +96,7 @@ The MAXScript Listener shows errors and can be used to run maxScript snippets (s
 1. Proofread and update CHANGES.md to capture any changes since last release.
 1. Commit and push these changes directly to master.
 1. Make sure the repository is clean `git clean -xdf`. __This will delete all files not already in the repository.__
-1. Pack the content of the *PluginPackage* folder and name it `io-cesium-ion-vx.x.x.zip` (were x.x.x will be the version)
+1. Pack the content of the *PluginPackage* folder and name it `io-cesium-ion-vx.x.x.zip` (where x.x.x will be the version)
 
 #### Testing
 
