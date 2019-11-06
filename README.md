@@ -29,7 +29,7 @@
 -   [ ] Remove this checklist from the README
 -   [ ] Is installation information available on the website or somewhere else?
 -   [ ] Is a blog post in progress?
--   [ ] Has the the addon been released to [cesium.com](https://github.com/AnalyticalGraphicsInc/cesium.com)?
+-   [ ] Has the addon been released to [cesium.com](https://github.com/AnalyticalGraphicsInc/cesium.com)?
 -   [ ] Check that the license has the proper year (i.e. the current year)
 
 ## ↑ **REMOVE ABOVE BEFORE RELEASE** ↑
@@ -74,7 +74,7 @@ or\
 Now run 3ds Max. To export your model to Cesium ion go to **File > Export > Export to Cesium ion**.\
 Since this is the first time you are using the add-on, you need to allow it to access your Cesium ion account. Click the login button to open your browser and request permissions. You may be asked for your name and password. If you are already logged in, a permissions window similar to the one below will appear immediately.
 
-![Authentification](Documentation/authentification.PNG)
+![Authentication](Documentation/authentification.PNG)
 
 Click Allow, close your browser window, and return to 3ds Max.\
 Now press the menu item **File > Export > Export to Cesium ion** again.\
