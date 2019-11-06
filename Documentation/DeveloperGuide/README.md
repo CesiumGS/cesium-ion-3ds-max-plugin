@@ -108,7 +108,7 @@ The MAXScript Listener shows errors and can be used to run maxScript snippets (s
 %ALLUSERSPROFILE%\Autodesk\ApplicationPlugins\ (e.g. C:\ProgramData\Autodesk\ApplicationPlugins)\
 or\
 %APPDATA%\Autodesk\ApplicationPlugins\ (e.g. C:\Users\<username>\AppData\Roaming\Autodesk\ApplicationPlugins)\
-**The location of PackageContents.xml has to be ..\ApplicationPlugins\io-cesium-ion-vx.x.x\PackageContents.xml. If this is not the case after unpacking, pack the release again accordingly**
+**The location of PackageContents.xml has to be *..\ApplicationPlugins\io-cesium-ion-vx.x.x\PackageContents.xml*. If this is not the case after unpacking, pack the release again accordingly**
 1. Rename your repository or delete the path to your repository in the ADSK_APPLICATION_PLUGINS enviroment variable.
 1. Start 3ds max
 1. Try out the pluging
