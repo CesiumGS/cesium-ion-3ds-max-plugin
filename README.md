@@ -79,7 +79,7 @@ Since this is the first time you are using the add-on, you need to allow it to a
 
 Click Allow, close your browser window, and return to 3ds Max.\
 Now press the menu item **File > Export > Export to Cesium ion** again.\
-The following panel will apper.
+The following panel will appear.
 
 ![Upload Dialog](Documentation/upload.PNG)
 
