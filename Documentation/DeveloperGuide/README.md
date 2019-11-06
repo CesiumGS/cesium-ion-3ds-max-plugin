@@ -9,9 +9,10 @@ The project consists of two parts:
 This guide covers how to run maxScript and build .NET in Visual Studio Code.
 Template task.json and launch.json files are included in the repository.
 
-#### Requirements
-- [.NET Core SDK](https://dotnet.microsoft.com/download)
-- [AWS SDK for .NET](https://aws.amazon.com/sdk-for-net/)
+#### Requirements for building, running and debugging of the .NET code
+These are not required, if only MAXScript files are changed.
+- **.NET Core SDK**: Follow [this link](https://dotnet.microsoft.com/download) select **Download .NET Core SDK** and follow the instructions.
+- **AWS SDK for .NET** is already included in the project file via NuGet. Therefore, building the project should automatically download the AWS SDK. If the Amazon.* namespaces are unavailable nevertheless, follow [this link](https://aws.amazon.com/sdk-for-net/) select **Download MSI Installer** and install the AWS Tools for Windows.
 
 #### Visual Studio Code
 
