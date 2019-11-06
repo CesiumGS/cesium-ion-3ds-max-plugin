@@ -1,6 +1,6 @@
 # Development
 
-3ds Max runs only on Windows, therefore the following documention is for Windows only.
+3ds Max runs only on Windows, therefore the following documentation is for Windows only.
 
 The project consists of two parts:
 - a .NET Core project which handles all network interaction.
@@ -52,7 +52,7 @@ Open the *Menus* tab and delete it in the panel on the right under *File->File-E
 
 #### Updating .NET
 
-Press *crtl + shift + b*. This builds the project for **Release** and places the binaries in the right folder (./PluginPackage/C#/).
+Press *ctrl + shift + b*. This builds the project for **Release** and places the binaries in the right folder (./PluginPackage/C#/).
 
 
 ## Debugging
@@ -80,11 +80,11 @@ The MAXScript Debugger and the [MAXScript Listener](http://help.autodesk.com/vie
     The MAXScript Listener 
 </p>
 
-The MAXScript Listener shows errors and can be used to run maxScript snippets (similar to a python console). The content of a variabel can be displayed by typing the name and pressing *Enter*.
+The MAXScript Listener shows errors and can be used to run maxScript snippets (similar to a python console). The content of a variable can be displayed by typing the name and pressing *Enter*.
 ### .NET
 
-1. Open *tasks.json* and change the arguments in brackets **<>** with the correct path. The first argument is the funtion name, the others are the function parameters. Instead of using arguments you can also change the main function in *server.cs* to do the desired task. But don't forget to change it back afterwards.
-1. Go to the Debug Panel (*crtl + shift + d*) and run in Debug Mode (*F5*).
+1. Open *tasks.json* and change the arguments in brackets **<>** with the correct path. The first argument is the function name, the others are the function parameters. Instead of using arguments you can also change the main function in *server.cs* to do the desired task. But don't forget to change it back afterwards.
+1. Go to the Debug Panel (*ctrl + shift + d*) and run in Debug Mode (*F5*).
 
 ## Releases
 
@@ -102,18 +102,18 @@ The MAXScript Listener shows errors and can be used to run maxScript snippets (s
 
 1. Reset the User Interface in 3ds max as described in [Delete old menus](#delete-old-menus)
 1. Close 3ds max
-1. Delete the tokenfile at *%LOCALAPPDATA%/Autodesk/3dsMax/\<ReleaseNumber> - 64bit/ENU/plugcfg_ln/cesiumIonToken*
+1. Delete the token file at *%LOCALAPPDATA%/Autodesk/3dsMax/\<ReleaseNumber> - 64bit/ENU/plugcfg_ln/cesiumIonToken*
 1. Delete all files named *cesiumion\<number>.fbx* and *progress\<number>.log* in *%LOCALAPPDATA%/Autodesk/3dsMax/\<ReleaseNumber> - 64bit/ENU/temp/*
 1. Unpack the created .zip file to\
 %ALLUSERSPROFILE%\Autodesk\ApplicationPlugins\ (e.g. C:\ProgramData\Autodesk\ApplicationPlugins)\
 or\
 %APPDATA%\Autodesk\ApplicationPlugins\ (e.g. C:\Users\<username>\AppData\Roaming\Autodesk\ApplicationPlugins)\
 **The location of PackageContents.xml has to be *..\ApplicationPlugins\io-cesium-ion-vx.x.x\PackageContents.xml*. If this is not the case after unpacking, pack the release again accordingly**
-1. Rename your repository or delete the path to your repository in the ADSK_APPLICATION_PLUGINS enviroment variable.
+1. Rename your repository or delete the path to your repository in the ADSK_APPLICATION_PLUGINS environment variable.
 1. Start 3ds max
-1. Try out the pluging
+1. Try out the plugin
 1. Provoke errors by interrupting the internet connection while uploading etc.
-1. After testing remove the previously copied *PluginPackage* folder and restore your repository name or ADSK_APPLICATION_PLUGINS enviroment variable.
+1. After testing remove the previously copied *PluginPackage* folder and restore your repository name or ADSK_APPLICATION_PLUGINS environment variable.
 
 #### Release
 
