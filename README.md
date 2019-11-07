@@ -71,13 +71,13 @@ or\
 
 ## Tutorial
 
-Now run 3ds Max. To export your model to Cesium ion go to **File > Export > Export to Cesium ion**.\
+Now run 3ds Max. To export your model to Cesium ion go to **File > Export > Export to Cesium ion...**.\
 Since this is the first time you are using the add-on, you need to allow it to access your Cesium ion account. Click the login button to open your browser and request permissions. You may be asked for your name and password. If you are already logged in, a permissions window similar to the one below will appear immediately.
 
 ![Authentication](Documentation/authentification.PNG)
 
 Click Allow, close your browser window, and return to 3ds Max.\
-Now press the menu item **File > Export > Export to Cesium ion** again.\
+Now press the menu item **File > Export > Export to Cesium ion...** again.\
 The following panel will appear.
 
 ![Upload Dialog](Documentation/upload.PNG)

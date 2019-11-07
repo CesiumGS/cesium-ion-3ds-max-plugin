@@ -6,7 +6,7 @@ struct cesiumPlugin
     ION_ADDRESS = "https://cesium.com",
     API_ADDRESS = "https://api.cesium.com",
 	REDIRECT_ADDRESS = @"http://localhost:5000/",
-	cesiumMenuName = "Export to Cesium ion",
+	cesiumMenuName = "Export to Cesium ion...",
 	tokenLocation,
 	progressFilePath,
 	uploadCounter = 0,
