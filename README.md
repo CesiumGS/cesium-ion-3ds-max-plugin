@@ -12,7 +12,7 @@ Learn more at https://cesium.com.
 
 ![KokuraCastle](./Documentation/kokura-castle-3ds-max-ion.png)
 <p align="center">
-    Kokura Castle (left) loaded into Blender and (right) fused with Cesium World Terrain and imagery in CesiumJS after being tiled with ion.
+    Kokura Castle (left) loaded into 3ds Max and (right) fused with Cesium World Terrain and imagery in CesiumJS after being tiled with ion.
 </p>
 
 ## Installation and Usage
@@ -23,29 +23,42 @@ For development, see [Developer Guide](./Documentation/DeveloperGuide/README.md)
 
 ## Tutorial
 
+3ds Max starts with an empty scene. You can load your own models at this time if you would like to export one of your own works.
+
 To export your model to Cesium ion go to **File > Export > Export to Cesium ion...**.
+
+![Access Cesium ion exporter](./Documentation/Tutorial-01-File-Menu.jpg)
 
 The first time you use the plugin, you will need to authorize the plugin to access your Cesium ion account. The plugin automatically launches the browser page. You may be asked for your name and password. If you are already logged in, a permissions window similar to the one below will appear immediately.
 
-![Authorization](Documentation/authorization.png)
+![Web page requesting access to your Cesium ion account](./Documentation/Tutorial-02-Request-Authorization.jpg)
 
 Click Allow, and the next page will confirm that permission has been granted. You can close your browser window and return to 3ds Max.
 
+![Web page confirming access to your Cesium ion account](./Documentation/Tutorial-03-Authorization-Approved.jpg)
+
 The Cesium ion exporter window in 3ds Max will look like:
 
-![Upload Dialog](Documentation/upload.png)
+![Cesium ion exporter window](./Documentation/Tutorial-04-Exporter-Fields.jpg)
 
-- **Name**: (Required) A name for the ion asset you are uploading.
-- **Description**: An optional description.
-- **Attribution**: Any attribution you would like to appear when this asset is loaded into client visualization engines.
-- **Model Type**: (Required) A hint to ion about the type of model you are uploading. For most 3ds Max models, select **3D Model**. If you are loading a mesh that originated from a 3D scan, LIDAR, or photogrammetry processes, select **3D Capture** instead.
-- **Use WebP images**: If enabled, will produce a tileset with WebP images, which are typically 25–34% smaller than equivalent JPEG images, leading to faster streaming and reduced data usage. 3D Tiles produced with this option requires a client that supports the glTF EXT_texture_webp extension, such as CesiumJS 1.54 or newer, and a browser that supports WebP, such as Chrome or Firefox 65 and newer.
-- **Export only selected**: If selected, only selected objects will be uploaded.
+* **Name**: (Required) A name for the ion asset you are uploading.
+* **Description**: An optional description.
+* **Attribution**: Any attribution you would like to appear when this asset is loaded into client visualization engines.
+* **Model Type**: (Required) A hint to ion about the type of model you are uploading. For most 3ds Max models, select **3D Model**. If you are loading a mesh that originated from a 3D scan, LIDAR, or photogrammetry processes, select **3D Capture** instead.
+* **Use WebP images**: If enabled, will produce a tileset with WebP images, which are typically 25–34% smaller than equivalent JPEG images, leading to faster streaming and reduced data usage. 3D Tiles produced with this option requires a client that supports the glTF EXT_texture_webp extension, such as CesiumJS 1.54 or newer, and a browser that supports WebP, such as Chrome or Firefox 65 and newer.
+* **Export only selected**: If selected, only selected objects will be uploaded.
 
 Next click **Upload to Cesium ion**
 
 At this point a progress bar will appear and the model will be uploaded to Cesium ion.
+
+![Upload progress](./Documentation/Tutorial-05-Exporter-Upload.jpg)
+
 When the upload is completed, 3ds Max will launch Cesium ion where you can view the asset in the ion dashboard.
+
+![Cesium ion Dashboard](./Documentation/Tutorial-06-ion-Asset.jpg)
+
+**Congratulations!** You have successfully published your first 3ds Max model to Cesium ion!
 
 ### Note on Textures and Baking
 
