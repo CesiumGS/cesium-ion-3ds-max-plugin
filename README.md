@@ -27,13 +27,13 @@ To export your model to Cesium ion go to **File > Export > Export to Cesium ion.
 
 The first time you use the plugin, you will need to authorize the plugin to access your Cesium ion account. The plugin automatically launches the browser page. You may be asked for your name and password. If you are already logged in, a permissions window similar to the one below will appear immediately.
 
-![Authorization](Documentation/Authorization.png)
+![Authorization](Documentation/authorization.png)
 
 Click Allow, and the next page will confirm that permission has been granted. You can close your browser window and return to 3ds Max.
 
 The Cesium ion exporter window in 3ds Max will look like:
 
-![Upload Dialog](Documentation/upload.PNG)
+![Upload Dialog](Documentation/upload.png)
 
 - **Name**: (Required) A name for the ion asset you are uploading.
 - **Description**: An optional description.

@@ -54,7 +54,7 @@ To update the popup simply rerun the `.ms` MaxScript file which creates it (for 
 
 When you close and reopen 3ds Max it can happen that the previously created export menu item will get lost. In that case it will still appear in there but with the text `Missing: exportButton'mxs docs` and without any functionality. To delete it open *Customize->Customize User Interface*.
 
-![Customize User Interface](../resetUI.PNG)
+![Customize User Interface](../resetUI.png)
 <p align="center">
     The Customize User Interface Dialog
 </p>
@@ -75,7 +75,7 @@ Code can be debugged using the `print "debug message"` command, or by creating a
 
 The later one opens the [MAXScript Debugger](http://help.autodesk.com/view/3DSMAX/2020/ENU/?guid=GUID-E04AB16E-D5C8-4B00-81A6-E3945E97A1EB).
 
-![MAXScript Debugger](../debugger.PNG)
+![MAXScript Debugger](../debugger.png)
 <p align="center">
     The MAXScript Debugger
 </p>
@@ -84,7 +84,7 @@ While in the debugger enter `?` as command to see a list of available commands.
 
 The MAXScript Debugger and the [MAXScript Listener](http://help.autodesk.com/view/3DSMAX/2020/ENU/?guid=GUID-C8019A8A-207F-48A0-985E-18D47FAD8F36) can also be opened via the *Scripting* menu in 3ds Max.
 
-![MAXScript Listener](../listener.PNG)
+![MAXScript Listener](../listener.png)
 <p align="center">
     The MAXScript Listener
 </p>
