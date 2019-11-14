@@ -106,10 +106,10 @@ static public class Server
             Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]).Wait();
             Console.WriteLine("Upload finished");
         }
-        if (args.Length >= 1 && args[0] == "website")
+        if (args.Length >= 2 && args[0] == "website")
         {
-            Console.WriteLine("Opening Cesium ion website");
-            OpenBrowser("https://cesium.com/cesium-ion/");
+            Console.WriteLine($"Opening website '{args[1]}'");
+            OpenBrowser(args[1]);
         }
     }
     

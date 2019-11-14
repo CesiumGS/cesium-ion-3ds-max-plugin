@@ -16,7 +16,8 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 
 	on buttonCesium pressed do
 	(
-		HiddenDOSCommand cesiumInstance.VISITWEBSITE startpath:cesiumInstance.SERVERDIRECTORY
+		local command = cesiumInstance.VISITWEBSITE + " https://cesium.com/ion"
+		HiddenDOSCommand command startpath:cesiumInstance.SERVERDIRECTORY
 	)
 
 	on buttonUpload pressed  do
