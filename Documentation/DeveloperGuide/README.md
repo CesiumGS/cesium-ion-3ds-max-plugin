@@ -93,7 +93,7 @@ The MAXScript Listener shows errors and can be used to run maxScript snippets (s
 
 ### .NET
 
-1. Open *tasks.json* and change the arguments in brackets `<>` with the correct path. The first argument is the function name, the others are the function parameters. Instead of using arguments you can also change the main function in *server.cs* to do the desired task. But don't forget to change it back afterwards.
+1. Open *launch.json* and change the arguments in brackets `<>` with the correct path. The first argument is the function name, the others are the function parameters. Instead of using arguments you can also change the main function in *server.cs* to do the desired task. But don't forget to change it back afterwards.
 2. Go to the Debug Panel (*ctrl + shift + d*) and run in Debug Mode (*F5*).
 
 ## Release Guide
