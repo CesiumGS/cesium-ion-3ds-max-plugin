@@ -1,11 +1,10 @@
 struct cesiumPlugin
 (
 	PLUGINDIRECTORY,
+	VISITWEBSITE,
 	SERVERGETTOKEN,
 	SERVERDIRECTORY,
 	CLIENT_ID = "62",
-    ION_ADDRESS = "https://cesium.com",
-    API_ADDRESS = "https://api.cesium.com",
 	REDIRECT_ADDRESS = @"http://localhost:5000/",
 	cesiumMenuName = "Export to Cesium ion...",
 	tokenLocation,
@@ -75,6 +74,8 @@ struct cesiumPlugin
 	),
 	fn init =
 	(
+			VISITWEBSITE = "C#.exe website";
+
 			local path = getSourceFileName()
 			path = getFilenamePath path
 			path = substring path 1 (path.count-1)

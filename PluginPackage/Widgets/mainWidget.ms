@@ -13,6 +13,12 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 	checkbox exportSelected "Export only selected" align:#left
 	button buttonUpload "Upload to Cesium ion" width:360 height:32
 	--button buttonLogout "Logout" width:360 height:32
+
+	on buttonCesium pressed do
+	(
+		HiddenDOSCommand cesiumInstance.VISITWEBSITE startpath:cesiumInstance.SERVERDIRECTORY
+	)
+
 	on buttonUpload pressed  do
 	(
 		if editName.text == "" then
