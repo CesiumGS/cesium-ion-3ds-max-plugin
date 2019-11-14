@@ -7,7 +7,7 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 	label labelAttribution "Attribution:" pos:[20,140] width:100 height:20 align:#left
 	editText editAttribution "" pos:[130,140] width:250 height:16 align:#left
 	label labelType "Model Type:" pos:[20,180] width:120 height:20 align:#left
-	dropDownList dropDownType "" pos:[160,180] width:220 height:20 items:#("3D Model", "3D Capture") selection:1 align:#left
+	dropDownList dropDownType "" pos:[160,180] width:220 height:20 items:#("3D Model", "3D Capture", "Single glTF") selection:1 align:#left
 	checkbox useWebP "Use WebP images" pos:[20,210] width:200 height:20 align:#left
 	checkbox exportSelected "Export only selected" pos:[20,230] width:200 height:20 align:#left
 	button buttonUpload "Upload to Cesium ion" pos:[20,260] width:360 height:32 align:#left
