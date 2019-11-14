@@ -40,17 +40,25 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 				if ((exportFile filePath #noPrompt selectedOnly:exportSelected.checked) and logFileCreated) then
 				(
 					local type
+					local sourceType
 					if dropDownType.selected == "3D Model" then
 					(
-						type = "3D_MODEL"
+						type = "3DTILES"
+						sourceType = "3D_MODEL"
 					)
-					else
+					if dropDownType.selected == "3D Capture" then
 					(
-						type = "3D_CAPTURE"
+						type = "3DTILES"
+						sourceType = "3D_CAPTURE"
 					)
+					if dropDownType.selected == "Single glTF" then
+					(	type = "GLTF"
+						sourceType = "3D_MODEL"
+					)
+
 					local textureFormat
 					if useWebP.checked then textureFormat = "WEBP" else textureFormat = "AUTO"
-					local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + editDesc.text + "\" \"" + editAttribution.text + "\" " + type + " " + textureFormat + " \"" + cesiumInstance.tokenLocation + "\" \"" + progressFilePath + "\""
+					local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + editDesc.text + "\" \"" + editAttribution.text + "\" " + type + " " + sourceType + " " + textureFormat + " \"" + cesiumInstance.tokenLocation + "\" \"" + progressFilePath + "\""
 					DestroyDialog cesiumfloater
 					CreateDialog cesiumInstance.uploadWidget width:600 height:130
 					cesiumInstance.uploadWidget.complete.text = "Cancel"

@@ -103,11 +103,10 @@ static public class Server
         if (args.Length >= 9 && args[0] == "upload")
         {
             Console.WriteLine("Start Upload");
-            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]).Wait();
+            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]).Wait();
             Console.WriteLine("Upload finished");
         }
     }
-
     
     private static readonly HttpClient client = new HttpClient();
     private static string clientID;
@@ -133,11 +132,11 @@ static public class Server
         Uri tokenUri = new Uri("https://api.cesium.com/oauth/token");
         Dictionary<string, string> parameters = new Dictionary<string, string>
         {
-        { "grant_type", "authorization_code" },
-        { "client_id", clientID },
-        { "code", code },
-        { "redirect_uri", redirectUri },
-        { "code_verifier", codeVerifier}
+            { "grant_type", "authorization_code" },
+            { "client_id", clientID },
+            { "code", code },
+            { "redirect_uri", redirectUri },
+            { "code_verifier", codeVerifier}
         };
         var POSTContent = new FormUrlEncodedContent(parameters);
 
@@ -208,12 +207,23 @@ static public class Server
         }
     }
 
-    public static async Task Upload(string filePath, string name, string description, string attribution, string sourceType, string textureFormat, string tokenPath, string logPath)
+    public static async Task Upload(string filePath, string name, string description, string attribution, string type, string sourceType, string textureFormat, string tokenPath, string logPath)
     {
-        string content = String.Format(
-        @"{{""name"": ""{0}"", ""description"": ""{1}"", ""attribution"": ""{2}"", ""type"": ""3DTILES"", ""options"": {{""sourceType"": ""{3}"", ""textureFormat"": ""{4}""}} }}",
-        name,description,attribution,sourceType,textureFormat);
-        var POSTContent = new StringContent(content, Encoding.UTF8, "application/json");
+        var content = new JsonObject
+        {
+            { "name", name },
+            { "description", description },
+            { "attribution", attribution },
+            { "type", type },
+            {
+                "options", new JsonObject
+                {
+                    { "sourceType", sourceType },
+                    { "textureFormat", textureFormat }
+                }}
+        };
+
+        var POSTContent = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
         string token = System.IO.File.ReadAllText(tokenPath);
         JsonObject json = JsonValue.Parse(token) as JsonObject;
         client.DefaultRequestHeaders.Add("Authorization","Bearer " + (string)json["access_token"]);
