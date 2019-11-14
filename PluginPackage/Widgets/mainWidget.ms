@@ -10,7 +10,8 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 	dropDownList dropDownType "" pos:[160,180] width:220 height:20 items:#("3D Model", "3D Capture", "Single glTF") selection:1 align:#left
 	checkbox useWebP "Use WebP images" pos:[20,210] width:200 height:20 align:#left
 	checkbox exportSelected "Export only selected" pos:[20,230] width:200 height:20 align:#left
-	button buttonUpload "Upload to Cesium ion" pos:[20,260] width:360 height:32 align:#left
+	button buttonUpload "Upload to Cesium ion" tooltip:"Press to send the selected objects to your account on Cesium ion" pos:[20,260] width:360 height:32 align:#left
+
 	--button buttonLogout "Logout" pos:[20,270] width:360 height:32 align:#left
 	on buttonUpload pressed  do
 	(
