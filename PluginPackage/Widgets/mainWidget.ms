@@ -89,6 +89,9 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 						local counter = 0;
 						local sleepTime = 0.1
 						local progress = 0
+						local speedAverage = 0.0
+						local numAverageFrames = 50
+						local recordedFrames = 0.0
 						while(running) do 
 						(
 							sleep sleepTime
@@ -103,8 +106,15 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 									progress = progress as integer
 									total = total as integer
 									cesiumInstance.uploadWidget.pb1.value = 100.0*progress/total
-									local speedKiB = (progress - progressTmp) / 1024 / sleepTime
-									cesiumInstance.uploadWidget.lbl1.text = "Uploading: " + (progress / 1024) as string + " KiB / " + (total / 1024) as string + " KiB\n " + speedKiB as string + " KiB/sec"
+									local currentSpeed = (progress - progressTmp) / 1024 / sleepTime
+
+									if (recordedFrames < numAverageFrames) then
+									(
+										recordedFrames += 1.0
+									)
+									speedAverage = speedAverage * ((recordedFrames - 1) / recordedFrames) + currentSpeed * (1 / recordedFrames)
+
+									cesiumInstance.uploadWidget.lbl1.text = "Uploading: " + (progress / 1024) as string + " KiB / " + (total / 1024) as string + " KiB\n " + speedAverage as string + " KiB/sec"
 									if (progress == total) then
 									(
 										cesiumInstance.uploadWidget.lbl1.text = "Upload Finished"
