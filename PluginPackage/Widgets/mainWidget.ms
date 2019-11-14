@@ -7,7 +7,7 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 	label labelAttribution "Attribution:" pos:[20,140] width:100 height:20 align:#left
 	editText editAttribution "" pos:[130,140] width:250 height:16 align:#left
 	label labelType "Model Type:" pos:[20,180] width:120 height:20 align:#left
-	dropDownList dropDownType "" pos:[160,180] width:220 height:20 items:#("3D Model", "3D Capture", "Single glTF") selection:1 align:#left
+	dropDownList dropDownType "" pos:[160,180] width:220 height:20 items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 align:#left
 	checkbox useWebP "Use WebP images" pos:[20,210] width:200 height:20 align:#left
 	checkbox exportSelected "Export only selected" pos:[20,230] width:200 height:20 align:#left
 	button buttonUpload "Upload to Cesium ion" pos:[20,260] width:360 height:32 align:#left
@@ -41,17 +41,17 @@ rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
 				(
 					local type
 					local sourceType
-					if dropDownType.selected == "3D Model" then
-					(
-						type = "3DTILES"
-						sourceType = "3D_MODEL"
-					)
-					if dropDownType.selected == "3D Capture" then
+					if dropDownType.selection == 1 then
 					(
 						type = "3DTILES"
 						sourceType = "3D_CAPTURE"
 					)
-					if dropDownType.selected == "Single glTF" then
+					if dropDownType.selection == 2 then
+					(
+						type = "3DTILES"
+						sourceType = "3D_MODEL"
+					)
+					if dropDownType.selection == 3 then
 					(	type = "GLTF"
 						sourceType = "3D_MODEL"
 					)
