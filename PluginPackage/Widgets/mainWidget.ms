@@ -1,18 +1,18 @@
-rollout cesiumFloater "Cesium ion Exporter" width:400 height:400
+rollout cesiumFloater "Cesium ion Exporter" width:400
 (
-	button buttonCesium "Visit Website" pos:[20,20] width:360 height:61 align:#center images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_color_black.bmp", undefined, 1, 1, 1, 1, 1)
-	label labelName "Name: (Required)" pos:[20,100] width:100 height:20 align:#left
-	editText editName "" pos:[130,100] width:250 height:16 align:#left
-	label labelDesc "Description:" pos:[20,140] width:100 height:20 align:#left
-	editText editDesc "" pos:[130,140] width:250 height:60 align:#left
-	label labelAttribution "Attribution:" pos:[20,220] width:100 height:20 align:#left
-	editText editAttribution "" pos:[130,220] width:250 height:16 align:#left
-	label labelType "Model Type:" pos:[20,260] width:120 height:20 align:#left
-	dropDownList dropDownType "" pos:[160,260] width:220 height:20 items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 align:#left
-	checkbox useWebP "Use WebP images" pos:[20,290] width:200 height:20 align:#left
-	checkbox exportSelected "Export only selected" pos:[20,310] width:200 height:20 align:#left
-	button buttonUpload "Upload to Cesium ion" pos:[20,340] width:360 height:32 align:#left
-	--button buttonLogout "Logout" pos:[20,270] width:360 height:32 align:#left
+	button buttonCesium "Visit Website" width:360 height:61 images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_color_black.bmp", undefined, 1, 1, 1, 1, 1)
+	label labelName "Name (Required):" align:#left across:2
+	editText editName "" align:#left
+	label labelDesc "Description:" align:#left across:2
+	editText editDesc "" height:60 align:#left
+	label labelAttribution "Attribution:" align:#left across:2
+	editText editAttribution "" align:#left
+	label labelType "Model Type:" align:#left across:2
+	dropDownList dropDownType "" items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 align:#left
+	checkbox useWebP "Use WebP images" align:#left
+	checkbox exportSelected "Export only selected" align:#left
+	button buttonUpload "Upload to Cesium ion" width:360 height:32
+	--button buttonLogout "Logout" width:360 height:32
 	on buttonUpload pressed  do
 	(
 		if editName.text == "" then
