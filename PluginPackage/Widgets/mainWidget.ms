@@ -1,17 +1,24 @@
-rollout cesiumFloater "Cesium ion Exporter" width:400 height:336
+rollout cesiumFloater "Cesium ion Exporter" width:400
 (
-	label labelName "Name: (Required)" pos:[20,20] width:100 height:20 align:#left
-	editText editName "" pos:[130,20] width:250 height:16 align:#left
-	label labelDesc "Description:" pos:[20,60] width:100 height:20 align:#left
-	editText editDesc "" pos:[130,60] width:250 height:60 align:#left
-	label labelAttribution "Attribution:" pos:[20,140] width:100 height:20 align:#left
-	editText editAttribution "" pos:[130,140] width:250 height:16 align:#left
-	label labelType "Model Type:" pos:[20,180] width:120 height:20 align:#left
-	dropDownList dropDownType "" pos:[160,180] width:220 height:20 items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 align:#left
-	checkbox useWebP "Use WebP images" pos:[20,210] width:200 height:20 align:#left
-	checkbox exportSelected "Export only selected" pos:[20,230] width:200 height:20 align:#left
-	button buttonUpload "Upload to Cesium ion" pos:[20,260] width:360 height:32 align:#left
-	--button buttonLogout "Logout" pos:[20,270] width:360 height:32 align:#left
+	button buttonCesium "Visit Website" width:288 height:61 images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_logo_white.png", cesiumInstance.PLUGINDIRECTORY + "/ion_logo_mask.png", 1, 1, 1, 1, 1)
+	label labelName "Name (Required):" align:#left across:2
+	editText editName "" align:#left
+	label labelDesc "Description:" align:#left across:2
+	editText editDesc "" height:60 align:#left
+	label labelAttribution "Attribution:" align:#left across:2
+	editText editAttribution "" align:#left
+	label labelType "Model Type:" align:#left across:2
+	dropDownList dropDownType "" items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 align:#left
+	checkbox useWebP "Use WebP images" align:#left
+	checkbox exportSelected "Export only selected" align:#left
+	button buttonUpload "Upload to Cesium ion" width:360 height:32
+	--button buttonLogout "Logout" width:360 height:32
+
+	on buttonCesium pressed do
+	(
+		HiddenDOSCommand cesiumInstance.VISITWEBSITE startpath:cesiumInstance.SERVERDIRECTORY
+	)
+
 	on buttonUpload pressed  do
 	(
 		if editName.text == "" then
