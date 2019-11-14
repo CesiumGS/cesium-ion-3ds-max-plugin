@@ -1,17 +1,17 @@
 rollout cesiumFloater "Cesium ion Exporter" width:400
 (
-	button buttonCesium "Visit Website" width:288 height:61 images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_logo_white.png", cesiumInstance.PLUGINDIRECTORY + "/ion_logo_mask.png", 1, 1, 1, 1, 1)
-	label labelName "Name (Required):" align:#left across:2
-	editText editName "" align:#left
-	label labelDesc "Description:" align:#left across:2
-	editText editDesc "" height:60 align:#left
-	label labelAttribution "Attribution:" align:#left across:2
-	editText editAttribution "" align:#left
-	label labelType "Model Type:" align:#left across:2
-	dropDownList dropDownType "" items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 align:#left
-	checkbox useWebP "Use WebP images" align:#left
-	checkbox exportSelected "Export only selected" align:#left
-	button buttonUpload "Upload to Cesium ion" width:360 height:32
+	button buttonCesium "Visit Website" width:288 height:61 tooltip:"https://cesium.com/ion" images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_logo_white.png", cesiumInstance.PLUGINDIRECTORY + "/ion_logo_mask.png", 1, 1, 1, 1, 1)
+	label labelName "Name (Required):" align:#left across:2 tooltip:"A name for the ion asset you are uploading."
+	editText editName "" align:#left tooltip:"A name for the ion asset you are uploading."
+	label labelDesc "Description:" align:#left across:2 tooltip:"An optional description."
+	editText editDesc "" height:60 align:#left tooltip:"An optional description."
+	label labelAttribution "Attribution:" align:#left across:2 tooltip:"Any attribution you would like to appear when this asset is loaded into client visualization engines."
+	editText editAttribution "" align:#left tooltip:"Any attribution you would like to appear when this asset is loaded into client visualization engines."
+	label labelType "Model Type:" align:#left across:2 tooltip:"Choose 3D Capture for models that originated from a 3D scan, LIDAR, or photogrammetry process, otherwise choose 3D Model. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose 3D Model (convert to glTF)."
+	dropDownList dropDownType "" items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 align:#left tooltip:"Choose 3D Capture for models that originated from a 3D scan, LIDAR, or photogrammetry process, otherwise choose 3D Model. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose 3D Model (convert to glTF)."
+	checkbox useWebP "Use WebP images" align:#left tooltip:"Produce a tileset with WebP images, which are typically 25-34% smaller than equivalent JPEG images, leading to faster streaming and reduced data usage. 3D Tiles produced with this option require a client that supports decoding WebP images."
+	checkbox exportSelected "Export only selected" align:#left tooltip:"Export only the selected models. Uncheck to export all models in the scene."
+	button buttonUpload "Upload to Cesium ion" width:360 height:32 tooltip:"Press to send the selected objects to your account on Cesium ion."
 	--button buttonLogout "Logout" width:360 height:32
 
 	on buttonCesium pressed do
