@@ -260,18 +260,29 @@ static public class Server
                             Key = uploadLocation["prefix"] + name + ".fbx"
                         };
 
-                        uploadRequest.UploadProgressEvent += (sender, args) =>
+                        long totalBytes = -1;
+
+                        void writeProgress(long current, long total)
                         {
-                            System.IO.File.WriteAllText(logPath, $"{args.TransferredBytes}/{args.TotalBytes}");
-                        };
+                            if (totalBytes < 0) totalBytes = total;
+                            System.IO.File.WriteAllText(logPath, $"{current}/{total}");
+                        }
+
+                        EventHandler<UploadProgressArgs> uploadEventHandler = (sender, args) 
+                            => writeProgress(args.TransferredBytes, args.TotalBytes);
+                        
+                        uploadRequest.UploadProgressEvent += uploadEventHandler;
 
                         await fileTransferUtility.UploadAsync(uploadRequest);
+
+                        uploadRequest.UploadProgressEvent -= uploadEventHandler;
+                        writeProgress(totalBytes, totalBytes);
+
                         var completeContent = new StringContent(onComplete["fields"].ToString(), Encoding.UTF8, "application/json");
-                        await client.PostAsync((string)onComplete["url"],completeContent);
+                        await client.PostAsync((string)onComplete["url"], completeContent);
                         string id = (string)uploadLocation["prefix"];
                         id = id.Substring(id.IndexOf("/"));
                         OpenBrowser(@"https://cesium.com/ion/assets" + id);
-                        Thread.Sleep(10);
                     } 
                 }
                 catch (Exception e)
