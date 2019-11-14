@@ -106,10 +106,10 @@ static public class Server
             Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]).Wait();
             Console.WriteLine("Upload finished");
         }
-        if (args.Length >= 1 && args[0] == "website")
+        if (args.Length >= 2 && args[0] == "website")
         {
-            Console.WriteLine("Opening Cesium ion website");
-            OpenBrowser("https://cesium.com/cesium-ion/");
+            Console.WriteLine($"Opening website '{args[1]}'");
+            OpenBrowser(args[1]);
         }
     }
     
@@ -260,18 +260,29 @@ static public class Server
                             Key = uploadLocation["prefix"] + name + ".fbx"
                         };
 
-                        uploadRequest.UploadProgressEvent += (sender, args) =>
+                        long totalBytes = -1;
+
+                        void writeProgress(long current, long total)
                         {
-                            System.IO.File.WriteAllText(logPath, $"{args.TransferredBytes}/{args.TotalBytes}");
-                        };
+                            if (totalBytes < 0) totalBytes = total;
+                            System.IO.File.WriteAllText(logPath, $"{current}/{total}");
+                        }
+
+                        EventHandler<UploadProgressArgs> uploadEventHandler = (sender, args) 
+                            => writeProgress(args.TransferredBytes, args.TotalBytes);
+                        
+                        uploadRequest.UploadProgressEvent += uploadEventHandler;
 
                         await fileTransferUtility.UploadAsync(uploadRequest);
+
+                        uploadRequest.UploadProgressEvent -= uploadEventHandler;
+                        writeProgress(totalBytes, totalBytes);
+
                         var completeContent = new StringContent(onComplete["fields"].ToString(), Encoding.UTF8, "application/json");
-                        await client.PostAsync((string)onComplete["url"],completeContent);
+                        await client.PostAsync((string)onComplete["url"], completeContent);
                         string id = (string)uploadLocation["prefix"];
                         id = id.Substring(id.IndexOf("/"));
                         OpenBrowser(@"https://cesium.com/ion/assets" + id);
-                        Thread.Sleep(10);
                     } 
                 }
                 catch (Exception e)
