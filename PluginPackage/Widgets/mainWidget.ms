@@ -1,6 +1,6 @@
 rollout cesiumFloater "Cesium ion Exporter" width:400
 (
-	button buttonCesium "Visit Website" width:360 height:61 images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_color_black.bmp", undefined, 1, 1, 1, 1, 1)
+	button buttonCesium "Visit Website" width:288 height:61 images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_logo_white.png", cesiumInstance.PLUGINDIRECTORY + "/ion_logo_mask.png", 1, 1, 1, 1, 1)
 	label labelName "Name (Required):" align:#left across:2
 	editText editName "" align:#left
 	label labelDesc "Description:" align:#left across:2
