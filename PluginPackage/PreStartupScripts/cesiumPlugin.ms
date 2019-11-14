@@ -1,10 +1,10 @@
 struct cesiumPlugin
 (
+	PLUGINDIRECTORY,
+	VISITWEBSITE,
 	SERVERGETTOKEN,
 	SERVERDIRECTORY,
 	CLIENT_ID = "62",
-    ION_ADDRESS = "https://cesium.com",
-    API_ADDRESS = "https://api.cesium.com",
 	REDIRECT_ADDRESS = @"http://localhost:5000/",
 	cesiumMenuName = "Export to Cesium ion...",
 	tokenLocation,
@@ -74,11 +74,13 @@ struct cesiumPlugin
 	),
 	fn init =
 	(
+			VISITWEBSITE = "C#.exe website";
+
 			local path = getSourceFileName()
 			path = getFilenamePath path
 			path = substring path 1 (path.count-1)
-			path = getFilenamePath path
-			SERVERDIRECTORY = path + @"C#\"
+			PLUGINDIRECTORY = getFilenamePath path
+			SERVERDIRECTORY = PLUGINDIRECTORY + @"C#\"
 			tokenLocation = (GetDir #plugcfg_ln + "\\cesiumIonToken")
 			SERVERGETTOKEN = "C#.exe" + " gettoken " + CLIENT_ID + " " + REDIRECT_ADDRESS + " \"" + tokenLocation + "\""
 			local tmpFiles = getFiles (GetDir #temp + "\\cesiumion*.fbx")
@@ -99,12 +101,12 @@ macroScript exportButton category: "mxs docs" tooltip:cesiumInstance.cesiumMenuN
 	if tokenFile == undefined then
 	(
 		HiddenDOSCommand cesiumInstance.SERVERGETTOKEN startpath:cesiumInstance.SERVERDIRECTORY donotwait:true
-		createDialog cesiumFloater height:300 width:400 modal:true
+		createDialog cesiumFloater modal:true
 	)
 	else
 	(
 		close tokenFile
 		free tokenFile
-		createDialog cesiumFloater height:300 width:400 modal:true
+		createDialog cesiumFloater modal:true
 	)
 )

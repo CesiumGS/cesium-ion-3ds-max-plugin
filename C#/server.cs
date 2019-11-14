@@ -106,6 +106,11 @@ static public class Server
             Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]).Wait();
             Console.WriteLine("Upload finished");
         }
+        if (args.Length >= 1 && args[0] == "website")
+        {
+            Console.WriteLine("Opening Cesium ion website");
+            OpenBrowser("https://cesium.com/cesium-ion/");
+        }
     }
     
     private static readonly HttpClient client = new HttpClient();
@@ -268,10 +273,6 @@ static public class Server
                         OpenBrowser(@"https://cesium.com/ion/assets" + id);
                         Thread.Sleep(10);
                     } 
-                }
-                catch (AmazonS3Exception e)
-                {
-                   System.IO.File.WriteAllText(logPath, String.Format("Error encountered on server. Message:'{0}' when writing an object", e.Message));
                 }
                 catch (Exception e)
                 {
