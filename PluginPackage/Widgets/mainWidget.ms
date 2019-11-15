@@ -2,7 +2,7 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 (
 	button buttonCesium "Visit Website" width:288 height:61 tooltip:"https://cesium.com/ion" images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_logo_white.png", cesiumInstance.PLUGINDIRECTORY + "/ion_logo_mask.png", 1, 1, 1, 1, 1)
 	editText editName "Name (Required):" tooltip:"A name for the ion asset you are uploading."
-	editText editDesc "Description:" height:60 tooltip:"An optional description."
+	editText editDescription "Description:" height:60 tooltip:"An optional description."
 	editText editAttribution "Attribution:" tooltip:"Any attribution you would like to appear when this asset is loaded into client visualization engines."
 	dropDownList dropDownType "Model Type:" items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 tooltip:"Choose 3D Capture for models that originated from a 3D scan, LIDAR, or photogrammetry process, otherwise choose 3D Model. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose 3D Model (convert to glTF)."
 	checkbox useWebP "Use WebP images" tooltip:"Produce a tileset with WebP images, which are typically 25-34% smaller than equivalent JPEG images, leading to faster streaming and reduced data usage. 3D Tiles produced with this option require a client that supports decoding WebP images."
@@ -18,6 +18,49 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 		if (index != undefined) then
 		(
 			editName.text = substring editName.text 1 (index - 1)
+		)
+
+		local titleIndex = fileProperties.findProperty #summary "Title"
+		if (titleIndex > 0) then
+		(
+			editName.text = fileProperties.getPropertyValue #summary titleIndex
+		)
+
+		local authorIndex = fileProperties.findProperty #summary "Author"
+		if (authorIndex > 0) then
+		(
+			if (editAttribution.text != "") then editAttribution.text += ", "
+			editAttribution.text += "Author: " + (fileProperties.getPropertyValue #summary authorIndex)
+		)
+
+		-- 'Manager' and 'Company' don't appear in this #summary for some reason so we skip them.
+
+		local subjectIndex = fileProperties.findProperty #summary "Subject"
+		if (subjectIndex > 0) then
+		(
+			if (editDescription.text != "") then editDescription.text += "\n"
+			editDescription.text += "Subject: " + (fileProperties.getPropertyValue #summary subjectIndex)
+		)
+
+		local categoryIndex = fileProperties.findProperty #summary "Category"
+		if (categoryIndex > 0) then
+		(
+			if (editDescription.text != "") then editDescription.text += "\n"
+			editDescription.text += "Category: " + (fileProperties.getPropertyValue #summary categoryIndex)
+		)
+
+		local keywordsIndex = fileProperties.findProperty #summary "Keywords"
+		if (keywordsIndex > 0) then
+		(
+			if (editDescription.text != "") then editDescription.text += "\n"
+			editDescription.text += "Keywords: " + (fileProperties.getPropertyValue #summary keywordsIndex)
+		)
+
+		local commentsIndex = fileProperties.findProperty #summary "Comments"
+		if (commentsIndex > 0) then
+		(
+			if (editDescription.text != "") then editDescription.text += "\n"
+			editDescription.text += "Comments: " + (fileProperties.getPropertyValue #summary commentsIndex)
 		)
 	)
 
@@ -73,7 +116,7 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 
 					local textureFormat
 					if useWebP.checked then textureFormat = "WEBP" else textureFormat = "AUTO"
-					local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + editDesc.text + "\" \"" + editAttribution.text + "\" " + type + " " + sourceType + " " + textureFormat + " \"" + cesiumInstance.tokenLocation + "\" \"" + progressFilePath + "\""
+					local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + editDescription.text + "\" \"" + editAttribution.text + "\" " + type + " " + sourceType + " " + textureFormat + " \"" + cesiumInstance.tokenLocation + "\" \"" + progressFilePath + "\""
 					DestroyDialog cesiumfloater
 					CreateDialog cesiumInstance.uploadWidget width:600 height:130
 					cesiumInstance.uploadWidget.complete.text = "Cancel"
