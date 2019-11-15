@@ -3,8 +3,8 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 	button buttonCesium "Visit Website" width:288 height:61 tooltip:"https://cesium.com/ion" images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_logo_white.png", cesiumInstance.PLUGINDIRECTORY + "/ion_logo_mask.png", 1, 1, 1, 1, 1)
 	editText editName "Name (Required):" tooltip:"A name for the ion asset you are uploading."
 	editText editDescription "Description:" height:60 tooltip:"An optional description."
-	editText editAttribution "Attribution:" tooltip:"Any attribution you would like to appear when this asset is loaded into client visualization engines."
-	dropDownList dropDownType "Model Type:" items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 tooltip:"Choose 3D Capture for models that originated from a 3D scan, LIDAR, or photogrammetry process, otherwise choose 3D Model. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose 3D Model (convert to glTF)."
+	editText editAttribution "Attribution:" height:60 tooltip:"Any attribution you would like to appear when this asset is loaded into client visualization engines."
+	dropDownList dropDownType "Model Type:" items:#("3D Capture", "3D Model", "3D Model (convert to glTF)") selection:2 width:220 height:20 align:#left tooltip:"Choose 3D Capture for models that originated from a 3D scan, LIDAR, or photogrammetry process, otherwise choose 3D Model. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose 3D Model (convert to glTF)."
 	checkbox useWebP "Use WebP images" tooltip:"Produce a tileset with WebP images, which are typically 25-34% smaller than equivalent JPEG images, leading to faster streaming and reduced data usage. 3D Tiles produced with this option require a client that supports decoding WebP images."
 	checkbox exportSelected "Export only selected" tooltip:"Export only the selected models. Uncheck to export all models in the scene."
 	button buttonUpload "Upload to Cesium ion" width:360 height:32 tooltip:"Press to send the selected objects to your account on Cesium ion."
@@ -26,15 +26,29 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 			editName.text = fileProperties.getPropertyValue #summary titleIndex
 		)
 
+		-- Attribution --
 		local authorIndex = fileProperties.findProperty #summary "Author"
 		if (authorIndex > 0) then
 		(
-			if (editAttribution.text != "") then editAttribution.text += ", "
+			if (editAttribution.text != "") then editAttribution.text += "\n"
 			editAttribution.text += "Author: " + (fileProperties.getPropertyValue #summary authorIndex)
 		)
 
-		-- 'Manager' and 'Company' don't appear in this #summary for some reason so we skip them.
+		local companyIndex = fileProperties.findProperty #contents "Company"
+		if (companyIndex > 0) then
+		(
+			if (editAttribution.text != "") then editAttribution.text += "\n"
+			editAttribution.text += "Company: " + (fileProperties.getPropertyValue #contents companyIndex)
+		)
 
+		local managerIndex = fileProperties.findProperty #contents "Manager"
+		if (managerIndex > 0) then
+		(
+			if (editAttribution.text != "") then editAttribution.text += "\n"
+			editAttribution.text += "Manager: " + (fileProperties.getPropertyValue #contents managerIndex)
+		)
+
+		-- Attribution --
 		local subjectIndex = fileProperties.findProperty #summary "Subject"
 		if (subjectIndex > 0) then
 		(
