@@ -1,7 +1,7 @@
 rollout cesiumFloater "Cesium ion Exporter" width:400
 (
 	button buttonCesium "Visit Website" width:288 height:61 tooltip:"https://cesium.com/ion" images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_logo_white.png", cesiumInstance.PLUGINDIRECTORY + "/ion_logo_mask.png", 1, 1, 1, 1, 1)
-	editText editName "Name (Required):" tooltip:"A name for the ion asset you are uploading."
+	editText editName "Name (Required):" text:maxFileName tooltip:"A name for the ion asset you are uploading."
 	editText editDesc "Description:" height:60 tooltip:"An optional description."
 	editText editAttribution "Attribution:" tooltip:"Any attribution you would like to appear when this asset is loaded into client visualization engines."
 	dropDownList dropDownType "Model Type:" items:#("3D Capture", "3D Model (tile as 3D tiles)", "3D Model (convert to glTF)") selection:2 tooltip:"Choose 3D Capture for models that originated from a 3D scan, LIDAR, or photogrammetry process, otherwise choose 3D Model. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose 3D Model (convert to glTF)."
