@@ -101,12 +101,12 @@ macroScript exportButton category: "mxs docs" tooltip:cesiumInstance.cesiumMenuN
 	if tokenFile == undefined then
 	(
 		HiddenDOSCommand cesiumInstance.SERVERGETTOKEN startpath:cesiumInstance.SERVERDIRECTORY donotwait:true
-		createDialog cesiumFloater modal:true
 	)
 	else
 	(
 		close tokenFile
 		free tokenFile
-		createDialog cesiumFloater modal:true
 	)
+
+	createDialog cesiumFloater modal:true
 )
