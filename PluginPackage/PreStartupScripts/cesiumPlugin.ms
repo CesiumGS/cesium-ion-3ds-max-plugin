@@ -95,7 +95,10 @@ cesiumInstance.init()
 
 -- create a menu
 
-macroScript exportButton category: "mxs docs" tooltip:cesiumInstance.cesiumMenuName
+macroScript exportButton 
+	category: "mxs docs" 
+	buttonText: cesiumInstance.cesiumMenuName
+	toolTip: "Publish the current 3ds Max file to your Cesium ion account."
 (
 	local tokenFile = openFile cesiumInstance.tokenLocation mode:"r"
 	if tokenFile == undefined then
