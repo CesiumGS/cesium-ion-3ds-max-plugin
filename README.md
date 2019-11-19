@@ -17,7 +17,11 @@ Learn more at https://cesium.com.
 
 ## Installation and Usage
 
-TODO: Autodesk App Store link here.
+The plugin can be installed by downloading and running the installer from the Autodesk App Store.
+
+[Cesium ion 3ds Max plugin on Autodesk App Store](https://apps.autodesk.com/3DSMAX/en/Detail/Index?id=3653390948844719757&appLang=en&os=Win64)
+
+[![Cesium ion App Store Page](./Documentation/cesium-ion-app-store-page.jpg)](https://apps.autodesk.com/3DSMAX/en/Detail/Index?id=3653390948844719757&appLang=en&os=Win64)
 
 For development, see [Developer Guide](./Documentation/DeveloperGuide/README.md)
 
@@ -44,7 +48,7 @@ The Cesium ion exporter window in 3ds Max will look like:
 * **Name**: (Required) A name for the ion asset you are uploading.
 * **Description**: An optional description.
 * **Attribution**: Any attribution you would like to appear when this asset is loaded into client visualization engines.
-* **Model Type**: (Required) A hint to ion about the type of model you are uploading. For most 3ds Max models, select **3D Model**. If you are loading a mesh that originated from a 3D scan, LIDAR, or photogrammetry processes, select **3D Capture** instead.
+* **Model Type**: (Required) A hint to ion about the type of model you are uploading. For most 3ds Max models, select **3D Model**. If you are loading a mesh that originated from a 3D scan, LIDAR, or photogrammetry processes, select **3D Capture** instead. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose **3D Model (convert to glTF)**.
 * **Use WebP images**: If enabled, will produce a tileset with WebP images, which are typically 25–34% smaller than equivalent JPEG images, leading to faster streaming and reduced data usage. 3D Tiles produced with this option requires a client that supports the glTF EXT_texture_webp extension, such as CesiumJS 1.54 or newer, and a browser that supports WebP, such as Chrome or Firefox 65 and newer.
 * **Export only selected**: If selected, only selected objects will be uploaded.
 
