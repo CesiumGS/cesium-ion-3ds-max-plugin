@@ -49,7 +49,7 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
             editAttribution.text += "Manager: " + (fileProperties.getPropertyValue #contents managerIndex)
         )
 
-        -- Attribution --
+        -- Description --
         local subjectIndex = fileProperties.findProperty #summary "Subject"
         if (subjectIndex > 0) then
         (
@@ -131,7 +131,15 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
 
                     local textureFormat
                     if useWebP.checked then textureFormat = "WEBP" else textureFormat = "AUTO"
-                    local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + editDescription.text + "\" \"" + editAttribution.text + "\" " + type + " " + sourceType + " " + textureFormat + " \"" + cesiumInstance.tokenLocation + "\" \"" + progressFilePath + "\""
+
+                    -- As description and attribution can have multiple lines, C# will break is \n is in the string.
+                    -- Replace it with a token here and replace it back in C# server.cs.
+                    local newLine = "\n"
+                    local newLineReplacement = "__\\n__"
+                    local description = substituteString editDescription.text newLine newLineReplacement
+                    local attribution = substituteString editAttribution.text newLine newLineReplacement
+
+                    local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + description + "\" \"" + attribution + "\" " + type + " " + sourceType + " " + textureFormat + " \"" + cesiumInstance.tokenLocation + "\" \"" + progressFilePath + "\""
                     DestroyDialog cesiumfloater
                     CreateDialog cesiumInstance.uploadWidget width:600 height:130
                     cesiumInstance.uploadWidget.complete.text = "Cancel"
