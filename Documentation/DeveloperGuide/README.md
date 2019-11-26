@@ -140,4 +140,14 @@ The MAXScript Listener shows errors and can be used to run maxScript snippets (s
 
 ### Release on Autodesk App Store
 
-**TODO** Update these instructions after first release to the app store.
+1. Complete the steps for release to github.
+2. Use VS Code Markdown PDF extension to create a PDF of the main [`README.md`](../../README.md).
+3. Add the generated `README.pdf` to the zip file.
+4. Go to the app page on Autodesk App Store using [this link](https://apps.autodesk.com/en/MyUploads/DetailPageForPublisher?appId=3653390948844719757&appLang=en&os=Win64). You will need to sign in using the `devops@cesium.com` account (login details in LastPass).
+5. Under **Actions** click **Edit**.
+6. Upload the new zip file under **App File** (remove any previous files).
+7. Update the version number.
+8. Update any text or screenshots as needed.
+9. Click continue to go to the next page, which contains information about pricing, versions and tags. Usually nothing to update here. Click continue again.
+10. Review the summary page. Click **Preview** to see how the app page will look on the app store. Go back and edit anything if needed, otherwise click continue. This will take you back to the page in step 4.
+11. On the left hand side, click the **Submit** button for send it to Autodesk for review and creating the installer.
