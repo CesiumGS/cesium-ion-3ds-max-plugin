@@ -22,10 +22,10 @@ using Amazon.Runtime;
 public class RandomString
 {
     internal static readonly char[] chars =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray(); 
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
 
     public static string GetUniqueString(int size)
-    {            
+    {
         byte[] data = new byte[4*size];
         using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
         {
@@ -47,7 +47,7 @@ public class StartUp
 {
     public void Configure(IApplicationBuilder app, Microsoft.Extensions.Hosting.IHostApplicationLifetime lifeTime)
     {
-        var serverAddressesFeature = 
+        var serverAddressesFeature =
             app.ServerFeatures.Get<IServerAddressesFeature>();
 
         app.UseStaticFiles();
@@ -85,18 +85,18 @@ public class StartUp
             {
                 await context.Response.WriteAsync(htmlFile.Replace("%RESPONSE%","<h2>Authorization Denied!</h2>"));
             }
-            
+
             lifeTime.StopApplication();
         });
     }
 }
 static public class Server
-{   
+{
     static void Main(string[] args)
     {
         if (args.Length >= 4 && args[0] == "gettoken")
         {
-            Console.WriteLine("Start gettoken");      
+            Console.WriteLine("Start gettoken");
             Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]).Wait(1000*60*5);
             Console.WriteLine("End");
         }
@@ -112,7 +112,7 @@ static public class Server
             OpenBrowser(args[1]);
         }
     }
-    
+
     private static readonly HttpClient client = new HttpClient();
     private static string clientID;
     private static string redirectUri;
@@ -132,7 +132,7 @@ static public class Server
             string state = query.Substring(index);
             code = query.Substring(6,index-6);
             //TODO: check state
-        } 
+        }
 
         Uri tokenUri = new Uri("https://api.cesium.com/oauth/token");
         Dictionary<string, string> parameters = new Dictionary<string, string>
@@ -186,7 +186,7 @@ static public class Server
         var encoded = Convert.ToBase64String(hashed);
         string codeChallenge = encoded.Replace("=","").Replace('+','-').Replace('/','_');
         Uri uri = new Uri(remoteUrl);
-        string query = "?response_type="+ Uri.EscapeDataString(responseType) + "&client_id=" + Uri.EscapeDataString(clientID) 
+        string query = "?response_type="+ Uri.EscapeDataString(responseType) + "&client_id=" + Uri.EscapeDataString(clientID)
         + "&redirect_uri=" + Uri.EscapeDataString(redirectUri) + "&scope=" + Uri.EscapeDataString(scope)
         + "&code_challenge=" + codeChallenge + "&code_challenge_method=S256";
         uri = new Uri(uri,query);
@@ -246,7 +246,7 @@ static public class Server
                 JsonObject responseJson = JsonValue.Parse(responseContent) as JsonObject;
                 JsonObject uploadLocation = responseJson["uploadLocation"] as JsonObject;
                 JsonObject onComplete = responseJson["onComplete"] as JsonObject;
-                try 
+                try
                 {
                     SessionAWSCredentials credentials = new SessionAWSCredentials(
                         (string)uploadLocation["accessKey"],
@@ -270,9 +270,9 @@ static public class Server
                             System.IO.File.WriteAllText(logPath, $"{current}/{total}");
                         }
 
-                        EventHandler<UploadProgressArgs> uploadEventHandler = (sender, args) 
+                        EventHandler<UploadProgressArgs> uploadEventHandler = (sender, args)
                             => writeProgress(args.TransferredBytes, args.TotalBytes);
-                        
+
                         uploadRequest.UploadProgressEvent += uploadEventHandler;
 
                         await fileTransferUtility.UploadAsync(uploadRequest);
@@ -285,7 +285,7 @@ static public class Server
                         string id = (string)uploadLocation["prefix"];
                         id = id.Substring(id.IndexOf("/"));
                         OpenBrowser(@"https://cesium.com/ion/assets" + id);
-                    } 
+                    }
                 }
                 catch (Exception e)
                 {
