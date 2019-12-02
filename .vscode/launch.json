@@ -4,7 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+
         {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
@@ -12,7 +12,7 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/C#/bin/Debug/netcoreapp3.0/C#.dll",
             // "args": ["gettoken", "56", "http://localhost:5000/", "<tokenpath>"],
-            "args": [ "upload", "<filepath>", "Test", " ", " ", "3D_MODEL", "AUTO", "<tokenpath>", "<logpath>" ],
+            "args": [ "upload", "<filepath>", "Test", " ", " ", "3DTILES", "3D_MODEL", "AUTO", "<tokenpath>", "<logpath>" ],
             "cwd": "${workspaceFolder}/C#",
             "stopAtEntry": false,
             "console": "internalConsole"
