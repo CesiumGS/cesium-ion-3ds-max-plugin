@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://cesium.com/images/logos/cesium/cesium_color_black.png" width="50%" />
+  <img src="./Documentation/Cesium_Logo_Color.jpg" width="50%" />
 </p>
 
 # Cesium ion 3ds Max Plugin
