@@ -65,5 +65,5 @@ function menuCallback =
     fileExportMenu.CreateAction "31b1024d-8e15-432c-aa2d-13e314ff2386" macroScriptTableId macroScriptTestActionId
 )
 -- Register our menu creation callback so that it can be executed whenever the menu structure is evaluated.
-callbacks.removeScripts id:#menuDemo
-callbacks.addScript #cuiRegisterMenus menuCallback id:#menuDemo
+callbacks.removeScripts id:#cesiumMenu
+callbacks.addScript #cuiRegisterMenus menuCallback id:#cesiumMenu
