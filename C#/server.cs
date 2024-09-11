@@ -100,10 +100,10 @@ static public class Server
             Server.GetToken(@"https://cesium.com/ion/oauth","code",args[1],args[2],"assets:write",args[3]).Wait(1000*60*5);
             Console.WriteLine("End");
         }
-        if (args.Length >= 9 && args[0] == "upload")
+        if (args.Length >= 10 && args[0] == "upload")
         {
             Console.WriteLine("Start Upload");
-            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]).Wait();
+            Server.Upload(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]).Wait();
             Console.WriteLine("Upload finished");
         }
         if (args.Length >= 2 && args[0] == "website")
@@ -212,7 +212,7 @@ static public class Server
         }
     }
 
-    public static async Task Upload(string filePath, string name, string description, string attribution, string type, string sourceType, string textureFormat, string tokenPath, string logPath)
+    public static async Task Upload(string filePath, string name, string description, string attribution, string type, string sourceType, string textureFormat, string geometricCompression, string tokenPath, string logPath)
     {
         description = description.Replace("__\\n__", "\n");
         attribution = attribution.Replace("__\\n__", "\n");
@@ -226,7 +226,8 @@ static public class Server
                 "options", new JsonObject
                 {
                     { "sourceType", sourceType },
-                    { "textureFormat", textureFormat }
+                    { "textureFormat", textureFormat },
+                    { "geometricCompression", geometricCompression }
                 }}
         };
 
