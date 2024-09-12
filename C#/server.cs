@@ -212,7 +212,7 @@ static public class Server
         }
     }
 
-    public static async Task Upload(string filePath, string name, string description, string attribution, string type, string sourceType, string textureFormat, string geometricCompression, string tokenPath, string logPath)
+    public static async Task Upload(string filePath, string name, string description, string attribution, string type, string sourceType, string textureFormat, string geometryCompression, string tokenPath, string logPath)
     {
         description = description.Replace("__\\n__", "\n");
         attribution = attribution.Replace("__\\n__", "\n");
@@ -227,7 +227,7 @@ static public class Server
                 {
                     { "sourceType", sourceType },
                     { "textureFormat", textureFormat },
-                    { "geometryCompression", geometricCompression }
+                    { "geometryCompression", geometryCompression }
                 }}
         };
 
