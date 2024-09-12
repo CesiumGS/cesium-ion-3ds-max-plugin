@@ -48,8 +48,13 @@ The Cesium ion exporter window in 3ds Max will look like:
 * **Name**: (Required) A name for the ion asset you are uploading.
 * **Description**: An optional description.
 * **Attribution**: Any attribution you would like to appear when this asset is loaded into client visualization engines.
-* **Model Type**: (Required) A hint to ion about the type of model you are uploading. For most 3ds Max models, select **3D Model**. If you are loading a mesh that originated from a 3D scan, LIDAR, or photogrammetry processes, select **3D Capture** instead. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose **3D Model (convert to glTF)**.
-* **Use WebP images**: If enabled, will produce a tileset with WebP images, which are typically 25–34% smaller than equivalent JPEG images, leading to faster streaming and reduced data usage. 3D Tiles produced with this option requires a client that supports the glTF EXT_texture_webp extension, such as CesiumJS 1.54 or newer, and a browser that supports WebP, such as Chrome or Firefox 65 and newer.
+* **Model Type**: (Required) A hint to ion about the type of model you are uploading. For most 3ds Max models, select **3D Model**. If you are loading a mesh that originated from a Reality Model, 3D scan, LIDAR, or photogrammetry processes, select **3D Capture / Reality Model / Photogrammetry** instead. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose **3D Model (convert to glTF)**.
+* **Geometry Compression**:
+Use one of the following geometry compression options to create a smaller tileset with better streaming performance.
+  * **Draco Compression** - Draco is a type of geometry compression optimized for smaller file sizes. 3D Tiles produced with this option require a client, such as CesiumJS, that supports the `KHR_draco_mesh_compression` glTF extension.
+  * **Meshopt Compression** - Meshopt geometry compression is optimized for runtime performance. 3D Tiles produced with this option require a client, such as CesiumJS, that supports the `EXT_meshopt_compression` glTF extension.
+  * **None** - No geometry compression is applied.
+* **KTX2 Texture Compression**: KTX v2.0 is an image container format that supports Basis Universal supercompression. Use KTX2 compression to create a smaller tileset with better streaming performance.  Disabling KTX2 extension results in a less optimized tileset but one that is compatible with clients that do not support KTX2. We recommend enabling KTX2 for your assets.
 * **Export only selected**: If selected, only selected objects will be uploaded.
 
 Next click **Upload to Cesium ion**

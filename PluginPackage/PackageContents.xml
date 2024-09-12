@@ -4,7 +4,7 @@
     AutodeskProduct="3ds Max"
     ProductType="Application"
     Name="Cesium ion 3ds Max plugin"
-    AppVersion="1.0.0"
+    AppVersion="1.1.0"
     ProductCode="{51cb480c-6675-46a4-80e3-ece81e24a028}"
     UpgradeCode="{3859b708-555b-44a0-846b-1e211caab7c3}">
     <CompanyDetails
@@ -18,15 +18,15 @@
     </Components>
     <Components Description="pre-start-up scripts parts">
         <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2017" SeriesMax="2024"/>
-		<ComponentEntry ModuleName="./PreStartupScripts/cesiumPlugin.ms" />
-		<ComponentEntry ModuleName="./Widgets/progressBar.ms" />
+        <ComponentEntry ModuleName="./PreStartupScripts/cesiumPlugin.ms" />
+        <ComponentEntry ModuleName="./Widgets/progressBar.ms" />
         <ComponentEntry ModuleName="./Widgets/nameRequiredWidget.ms" />
         <ComponentEntry ModuleName="./Widgets/mainWidget.ms" />
     </Components>
     <Components Description="pre-start-up scripts parts">
         <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2025" SeriesMax="2025"/>
-		<ComponentEntry ModuleName="./PreStartupScripts/cesiumPlugin2025.ms" />
-		<ComponentEntry ModuleName="./Widgets/progressBar.ms" />
+        <ComponentEntry ModuleName="./PreStartupScripts/cesiumPlugin2025.ms" />
+        <ComponentEntry ModuleName="./Widgets/progressBar.ms" />
         <ComponentEntry ModuleName="./Widgets/nameRequiredWidget.ms" />
         <ComponentEntry ModuleName="./Widgets/mainWidget.ms" />
     </Components>

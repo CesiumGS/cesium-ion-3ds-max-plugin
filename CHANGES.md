@@ -1,5 +1,10 @@
 # Change Log
 
+### 2024-09-12
+
+* Update the plugin to support 3ds Max 2025.
+* Plugin now exports to use Cesium ion's Reality Tiler API.
+
 ### 2021-06-09
 
 ##### Fixes :wrench:
