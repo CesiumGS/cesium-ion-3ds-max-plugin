@@ -13,14 +13,21 @@
         Email="support@cesium.com"
     />
     <Components Description="post-start-up scripts parts">
-        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2017" SeriesMax="2022"/>
+        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2017" SeriesMax="2024"/>
         <ComponentEntry ModuleName="./PostStartupScripts/addMenu.ms" />
     </Components>
     <Components Description="pre-start-up scripts parts">
-        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2017" SeriesMax="2022"/>
+        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2017" SeriesMax="2024"/>
 		<ComponentEntry ModuleName="./PreStartupScripts/cesiumPlugin.ms" />
 		<ComponentEntry ModuleName="./Widgets/progressBar.ms" />
         <ComponentEntry ModuleName="./Widgets/nameRequiredWidget.ms" />
         <ComponentEntry ModuleName="./Widgets/mainWidget.ms" />
-	</Components>
+    </Components>
+    <Components Description="pre-start-up scripts parts">
+        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2025" SeriesMax="2025"/>
+		<ComponentEntry ModuleName="./PreStartupScripts/cesiumPlugin2025.ms" />
+		<ComponentEntry ModuleName="./Widgets/progressBar.ms" />
+        <ComponentEntry ModuleName="./Widgets/nameRequiredWidget.ms" />
+        <ComponentEntry ModuleName="./Widgets/mainWidget.ms" />
+    </Components>
 </ApplicationPackage>

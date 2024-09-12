@@ -1,15 +1,20 @@
 rollout cesiumFloater "Cesium ion Exporter" width:400
 (
+    local geometryCompressionTooltip = "\"None\" is used to disable geometry compression. \"Draco\" uses Draco Compression to create a smaller tileset with better streaming performance. 3D Tiles produced with this option require a host that supports the KHR_draco_mesh_compression glTF extension. All official Cesium clients are supported. \"Meshopt\" geometric compression is optimized for runtime performance. 3D Tiles produced with this option require a client, such as CesiumJS, that supports the EXT_meshopt_compression glTF extension."
+    local modelTypeTooltip = "Choose \"3D Capture\" for models that originated from a 3D scan, LIDAR, or photogrammetry process. Otherwise choose \"3D Model.\" To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose \"3D Model (convert to glTF).\""
+    local ktxTooltip = "KTX v2.0 is an image container format that supports Basis Universal supercompression. Use KTX2 Compression to create a smaller tileset with better streaming performance."
+
     button buttonCesium "Visit Website" width:288 height:61 tooltip:"https://cesium.com/ion" images:#(cesiumInstance.PLUGINDIRECTORY + "/ion_logo_white.png", cesiumInstance.PLUGINDIRECTORY + "/ion_logo_mask.png", 1, 1, 1, 1, 1)
     editText editName "Name (Required):" tooltip:"A name for the ion asset you are uploading."
     editText editDescription "Description:" height:60 tooltip:"An optional description."
     editText editAttribution "Attribution:" height:60 tooltip:"Any attribution you would like to appear when this asset is loaded into client visualization engines."
-    label labelType "Model Type:" align:#left across:2 tooltip:"Choose 3D Capture for models that originated from a 3D scan, LIDAR, or photogrammetry process, otherwise choose 3D Model. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose 3D Model (convert to glTF)."
-    dropDownList dropDownType "" selection:2 align:#left items:#("3D Capture", "3D Model", "3D Model (convert to glTF)") tooltip:"Choose 3D Capture for models that originated from a 3D scan, LIDAR, or photogrammetry process, otherwise choose 3D Model. To host a model on Cesium ion as glTF, without tiling it into 3D Tiles, choose 3D Model (convert to glTF)."
-    checkbox useWebP "Use WebP images" tooltip:"Produce a tileset with WebP images, which are typically 25-34% smaller than equivalent JPEG images, leading to faster streaming and reduced data usage. 3D Tiles produced with this option require a client that supports decoding WebP images."
-    checkbox exportSelected "Export only selected" tooltip:"Export only the selected models. Uncheck to export all models in the scene."
+    label labelType "Model Type:" align:#left across:2 tooltip:modelTypeTooltip
+    dropDownList dropDownType "" selection:2 align:#left items:#("3D Capture / Reality Model / Photogrammetry", "3D Model", "3D Model (convert to glTF)") tooltip:modelTypeTooltip
+    label geometryCompression "Geometry Compression:" align:#left across:2 tooltip:geometryCompressionTooltip
+    dropDownList geometryCompressionType "" selection:2 align:#left items:#("None", "Draco", "MeshOpt") tooltip:geometryCompressionTooltip
+    checkbox useKtx2 "KTX2 Compression" tooltip:ktxTooltip
+    checkbox exportSelected "Export Only Selected" tooltip:"Export only the selected models. Uncheck to export all models in the scene."
     button buttonUpload "Upload to Cesium ion" width:360 height:32 tooltip:"Press to send the selected objects to your account on Cesium ion."
-    --button buttonLogout "Logout" width:360 height:32
 
     on cesiumFloater open do
     (
@@ -130,7 +135,21 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
                     )
 
                     local textureFormat
-                    if useWebP.checked then textureFormat = "WEBP" else textureFormat = "AUTO"
+                    if useKtx2.checked then textureFormat = "KTX2" else textureFormat = "AUTO"
+
+                    local geometryCompression
+                    if geometryCompressionType.selection == 1 then
+                    (
+                        geometryCompression = "NONE"
+                    )
+                    if geometryCompressionType.selection == 2 then
+                    (
+                        geometryCompression = "DRACO"
+                    )
+                    if geometryCompressionType.selection == 3 then
+                    (   
+                        geometryCompression = "MESHOPT"
+                    )
 
                     -- As description and attribution can have multiple lines, C# will break is \n is in the string.
                     -- Replace it with a token here and replace it back in C# server.cs.
@@ -139,7 +158,7 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
                     local description = substituteString editDescription.text newLine newLineReplacement
                     local attribution = substituteString editAttribution.text newLine newLineReplacement
 
-                    local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + description + "\" \"" + attribution + "\" " + type + " " + sourceType + " " + textureFormat + " \"" + cesiumInstance.tokenLocation + "\" \"" + progressFilePath + "\""
+                    local upload = "C#.exe" + " upload \"" + filePath + "\" \"" + editName.text + "\" \"" + description + "\" \"" + attribution + "\" " + type + " " + sourceType + " " + textureFormat + " " + geometryCompression + " \"" + cesiumInstance.tokenLocation + "\" \"" + progressFilePath + "\""
                     DestroyDialog cesiumfloater
                     CreateDialog cesiumInstance.uploadWidget width:600 height:130
                     cesiumInstance.uploadWidget.complete.text = "Cancel"
@@ -220,6 +239,34 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
             )
         )
     )
+	
+	fn updateOptionsVisibility =
+    (
+        if dropDownType.selection == 1 then
+        (
+            geometryCompression.visible = true
+            geometryCompressionType.visible = true
+            useKtx2.visible = true
+        )
+        else
+        (
+            geometryCompression.visible = false
+            geometryCompressionType.visible = false
+            useKtx2.visible = false
+        )
+    )
+
+    on dropDownType selected selectionIndex do
+    (
+        updateOptionsVisibility()
+    )
+
+    on cesiumFloater open do
+    (
+        -- Initialize visibility based on current selection
+        updateOptionsVisibility()
+    )
+
     /*on buttonLogout pressed  do
     (
         gc()
