@@ -9,7 +9,7 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
     editText editDescription "Description:" height:60 tooltip:"An optional description."
     editText editAttribution "Attribution:" height:60 tooltip:"Any attribution you would like to appear when this asset is loaded into client visualization engines."
     label labelType "Model Type:" align:#left across:2 tooltip:modelTypeTooltip
-    dropDownList dropDownType "" selection:2 align:#left items:#("3D Capture", "3D Model", "3D Model (convert to glTF)") tooltip:modelTypeTooltip
+    dropDownList dropDownType "" selection:2 align:#left items:#("3D Capture / Reality Model / Photogrammetry", "3D Model", "3D Model (convert to glTF)") tooltip:modelTypeTooltip
     label geometricCompression "Geometric Compression:" align:#left across:2 tooltip:geometricCompressionTooltip
     dropDownList geometricCompressionType "" selection:2 align:#left items:#("None", "Draco", "MeshOpt") tooltip:geometricCompressionTooltip
     checkbox useKtx2 "KTX2 Compression" tooltip:ktxTooltip
