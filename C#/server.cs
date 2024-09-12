@@ -227,7 +227,7 @@ static public class Server
                 {
                     { "sourceType", sourceType },
                     { "textureFormat", textureFormat },
-                    { "geometricCompression", geometricCompression }
+                    { "geometryCompression", geometricCompression }
                 }}
         };
 

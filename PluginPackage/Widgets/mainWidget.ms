@@ -137,7 +137,6 @@ rollout cesiumFloater "Cesium ion Exporter" width:400
                     local textureFormat
                     if useKtx2.checked then textureFormat = "KTX2" else textureFormat = "AUTO"
 
-                    -- TODO
                     local geometricCompression
                     if geometricCompressionType.selection == 1 then
                     (
